@@ -2,6 +2,11 @@
 .search__block {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
 }
 
 .search__block {
@@ -37,6 +42,8 @@
 }
 
 .create__btn {
+  position: absolute;
+  right: 20px;
   width: 114px;
   height: 36px;
   display: flex;

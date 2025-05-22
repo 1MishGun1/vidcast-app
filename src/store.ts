@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { videoReducer } from "./features/videos/videos";
+import { themeReducer } from "./features/theme/theme";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    video: videoReducer,
+    theme: themeReducer,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

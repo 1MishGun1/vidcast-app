@@ -1,0 +1,124 @@
+.login_page {
+  display: flex;
+}
+
+.login_img {
+  width: 60vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.login_form_section,
+.form_row {
+  display: flex;
+  flex-direction: column;
+}
+
+.login_form_section {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.login_logo_img {
+  width: 200px;
+}
+
+.login_title {
+  text-align: center;
+  font-size: 32px;
+}
+
+.form_login {
+  position: relative;
+  width: 50%;
+  background-color: rgb(23, 23, 23);
+  padding: 30px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 10px;
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    background: linear-gradient(
+      45deg,
+      rgb(0, 8, 238),
+      rgb(243, 18, 33),
+      rgb(0, 8, 238),
+      rgb(243, 18, 33),
+      rgb(0, 8, 238),
+      rgb(243, 18, 33),
+      rgb(0, 8, 238),
+      rgb(243, 18, 33)
+    );
+    background-size: 300%;
+    z-index: -1;
+    animation: formMove 12s linear infinite;
+  }
+
+  &::after {
+    filter: blur(16px);
+  }
+}
+
+@keyframes formMove {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 300% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.form_input {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 8px 0px;
+  padding-left: 10px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: white;
+}
+
+.form_btn {
+  border: 1px solid white;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all ease 0.3s;
+  margin: 0 auto;
+  padding: 8px 14px;
+}
+
+.form_btn:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(243, 18, 96, 1) 25%,
+    rgba(0, 111, 238, 1) 75%
+  );
+  color: white;
+  border: 1px solid transparent;
+}
+
+.form_register {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.form_question {
+  font-size: 16px;
+}

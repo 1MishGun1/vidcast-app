@@ -11,7 +11,7 @@ import {
   MdZoomInMap,
 } from "react-icons/md";
 import Styles from "./VideoPlayer.module.css";
-// import videoSrc from "../assets/video2.webm";
+// import { videoSrc } from "../../assets/video2.webm";
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -143,7 +143,7 @@ const VideoPlayer: React.FC = () => {
       <div className="video-wrapper">
         <video
           ref={videoRef}
-          //   src={videoSrc}
+          src="../../assets/video.mp4"
           className="video"
           onClick={handleVideoClick}
         />

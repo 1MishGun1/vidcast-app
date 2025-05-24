@@ -3,7 +3,7 @@ import {
   IUser,
   IUserState,
   ILoginUser,
-  IUserResponse,
+  IRegisterUser,
 } from "../../models/user";
 import axios from "../../api/config";
 import { RootState } from "../../store";
@@ -12,6 +12,14 @@ export const fetchUserData = createAsyncThunk<IUser, ILoginUser>(
   "auth/fetchUserData",
   async (params) => {
     const { data } = await axios.post("/login", params);
+    return data;
+  }
+);
+
+export const fetchUserRegister = createAsyncThunk<IUser, IRegisterUser>(
+  "auth/fetchUserRegister",
+  async (params) => {
+    const { data } = await axios.post("/register", params);
     return data;
   }
 );
@@ -67,6 +75,22 @@ export const authSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchAuthMe.rejected, (state) => {
+        state.loading = false;
+        state.error = "Error login user";
+      })
+
+      .addCase(fetchUserRegister.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        fetchUserRegister.fulfilled,
+        (state, action: PayloadAction<IUser>) => {
+          state.loading = false;
+          state.data = action.payload;
+        }
+      )
+      .addCase(fetchUserRegister.rejected, (state) => {
         state.loading = false;
         state.error = "Error login user";
       });

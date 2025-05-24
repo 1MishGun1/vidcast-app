@@ -4,17 +4,19 @@ import { FaRegUserCircle, FaFireAlt, FaHistory } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { BiLike } from "react-icons/bi";
 import { PiSignInBold } from "react-icons/pi";
-// import { HiMenu, HiMenuAlt1 } from "react-icons/hi";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RootState } from "../../store";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, selectIsAuth } from "../../features/auth/auth";
 
 export const SideBar = () => {
+  const dispatch = useDispatch();
   const [isShort, setIsShort] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
+  const isAuth = useSelector(selectIsAuth);
 
   const toggleSideBar = () => {
     setIsShort(!isShort);
@@ -26,6 +28,11 @@ export const SideBar = () => {
     } else {
       return isShort ? "/img/logo_vc_short.svg" : "/img/logo_vc_long.svg";
     }
+  };
+
+  const onHandleLogout = () => {
+    dispatch(logout());
+    window.localStorage.removeItem("token");
   };
 
   return (
@@ -77,14 +84,25 @@ export const SideBar = () => {
             <BiLike size={24} />
             {!isShort && <span>Лайки</span>}
           </Link>
-          <Link
-            to={"/login"}
-            className={Styles.nav__item_sign}
-            data-theme={theme}
-          >
-            <PiSignInBold size={24} />
-            {!isShort && <span>Войти</span>}
-          </Link>
+          {isAuth ? (
+            <button
+              className={Styles.nav__item_sign}
+              data-theme={theme}
+              onClick={onHandleLogout}
+            >
+              <PiSignInBold size={24} />
+              {!isShort && <span>Выйти</span>}
+            </button>
+          ) : (
+            <Link
+              to={"/login"}
+              className={Styles.nav__item_sign}
+              data-theme={theme}
+            >
+              <PiSignInBold size={24} />
+              {!isShort && <span>Войти</span>}
+            </Link>
+          )}
         </div>
       </nav>
     </aside>

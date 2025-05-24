@@ -23,6 +23,15 @@ export interface ILoginUser {
   password: string;
 }
 
+export interface IRegisterUser {
+  name: string;
+  surname: string;
+  login: string;
+  email: string;
+  password: string;
+  avatar?: string;
+}
+
 export interface IUserResponse {
   tokenUser: string;
   user: IUser;

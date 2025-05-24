@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../features/theme/theme";
 import { RootState } from "../../store";
+import { selectIsAuth } from "../../features/auth/auth";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
+  const isAuth = useSelector(selectIsAuth);
 
   return (
     <header className={Styles["header"]}>
@@ -27,9 +29,19 @@ export const Header = () => {
           {theme === "light" ? "🌙" : "☀️"}
         </button>
       </div>
-      <Link to={"/"} className={Styles["create__btn"]} data-theme={theme}>
-        <BsCameraVideo size={24} /> Создать
-      </Link>
+      {isAuth ? (
+        <Link
+          to={"/create/video"}
+          className={Styles["create__btn"]}
+          data-theme={theme}
+        >
+          <BsCameraVideo size={24} /> Создать
+        </Link>
+      ) : (
+        <Link to={"/"} className={Styles["create__btn"]} data-theme={theme}>
+          <BsCameraVideo size={24} /> Создать
+        </Link>
+      )}
     </header>
   );
 };

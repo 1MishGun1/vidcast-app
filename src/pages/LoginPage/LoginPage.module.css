@@ -29,10 +29,18 @@
   font-size: 32px;
 }
 
+.form_login[data-theme="light"] {
+  --bg-color: rgb(245, 245, 245);
+}
+
+.form_login[data-theme="dark"] {
+  --bg-color: rgb(23, 23, 23);
+}
+
 .form_login {
   position: relative;
   width: 50%;
-  background-color: rgb(23, 23, 23);
+  background-color: var(--bg-color);
   padding: 30px;
   border-radius: 10px;
   display: flex;
@@ -81,21 +89,33 @@
   }
 }
 
+.form_input[data-theme="light"],
+.form_btn[data-theme="light"],
+.form_input[data-theme="light"] {
+  --color: black;
+}
+
+.form_input[data-theme="dark"],
+.form_btn[data-theme="dark"],
+.form_input[data-theme="dark"] {
+  --color: white;
+}
+
 .form_input {
   background-color: transparent;
-  border: 1px solid white;
+  border: 1px solid var(--color);
   border-radius: 4px;
   padding: 8px 0px;
   padding-left: 10px;
   font-weight: 600;
   margin-top: 4px;
-  color: white;
+  color: var(--color);
 }
 
 .form_btn {
   width: 50%;
   height: 36px;
-  border: 1px solid white;
+  border: 1px solid var(--color);
   border-radius: 6px;
   font-size: 16px;
   font-weight: 700;
@@ -118,14 +138,6 @@
   justify-content: center;
   gap: 8px;
   padding-top: 10px;
-
-  /* &:before {
-    content: "";
-    display: block;
-    background: white;
-    height: 1px;
-    width: 100%;
-  } */
 }
 
 .form_question {

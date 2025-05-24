@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { fetchVideo } from "../../api/config";
+import axios from "../../api/config";
 import { IVideo, IVideoState } from "../../models/video";
 
 export const getAllVideos = createAsyncThunk("videos/getVideos", async () => {
-  const data = await fetchVideo();
+  const { data } = await axios.get("/videos");
   return data;
 });
 

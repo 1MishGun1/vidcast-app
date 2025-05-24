@@ -5,9 +5,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsAuth } from "../../features/auth/auth";
 import { AppDispatch } from "../../store";
+import { RootState } from "../../store";
 
 export const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const isAuth = useSelector(selectIsAuth);
   const {
     register,
@@ -43,6 +45,7 @@ export const LoginPage = () => {
         <form
           className={Styles["form_login"]}
           onSubmit={handleSubmit(onSubmit)}
+          data-theme={theme}
         >
           <h1 className={Styles["login_title"]}>Войти</h1>
           <div className={Styles["form_row"]}>
@@ -52,6 +55,7 @@ export const LoginPage = () => {
               id="login"
               className={Styles["form_input"]}
               {...register("login", { required: "Укажите логин" })}
+              data-theme={theme}
             />
           </div>
           <div className={Styles["form_row"]}>
@@ -61,9 +65,14 @@ export const LoginPage = () => {
               id="password"
               className={Styles["form_input"]}
               {...register("password", { required: "Укажите пароль" })}
+              data-theme={theme}
             />
           </div>
-          <button type="submit" className={Styles["form_btn"]}>
+          <button
+            type="submit"
+            className={Styles["form_btn"]}
+            data-theme={theme}
+          >
             Войти
           </button>
           <div className={Styles["form_register"]}>

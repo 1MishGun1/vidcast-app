@@ -50,6 +50,7 @@ a,
 p,
 button {
   color: var(--text-color);
+  font-family: "Montserrat", sans-serif;
 }
 
 a {

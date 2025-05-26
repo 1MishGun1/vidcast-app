@@ -26,7 +26,7 @@ export const Header = () => {
           <IoMdSearch size={24} />
         </button>
         <button onClick={() => dispatch(toggleTheme())}>
-          {theme === "light" ? "🌙" : "☀️"}
+          {theme === "light" ? "🌙" : "☀️"} 
         </button>
       </div>
       {isAuth ? (
@@ -38,7 +38,11 @@ export const Header = () => {
           <BsCameraVideo size={24} /> Создать
         </Link>
       ) : (
-        <Link to={"/"} className={Styles["create__btn"]} data-theme={theme}>
+        <Link
+          to={"/login"}
+          className={Styles["create__btn"]}
+          data-theme={theme}
+        >
           <BsCameraVideo size={24} /> Создать
         </Link>
       )}

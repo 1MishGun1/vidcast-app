@@ -4,8 +4,7 @@ import { ILoginUser } from "../../models/user";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsAuth } from "../../features/auth/auth";
-import { AppDispatch } from "../../store";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 
 export const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();

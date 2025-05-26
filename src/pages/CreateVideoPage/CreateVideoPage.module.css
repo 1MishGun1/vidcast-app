@@ -1,0 +1,125 @@
+.create_video_page {
+  margin-top: 20px;
+}
+
+.create_video_title {
+  font-size: 26px;
+}
+
+.create_video_form {
+  display: flex;
+  margin-top: 30px;
+  gap: 100px;
+}
+
+.create_video_left_part,
+.create_video_right_part {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form_row {
+  display: flex;
+  flex-direction: column;
+}
+
+.form_input[data-theme="dark"],
+.form_textarea[data-theme="dark"],
+.form_input_cover[data-theme="dark"] {
+  --color-border: white;
+}
+
+.form_input[data-theme="light"],
+.form_textarea[data-theme="light"],
+.form_input_cover[data-theme="light"] {
+  --color-border: black;
+}
+
+.form_input,
+.form_textarea {
+  margin-top: 5px;
+}
+
+.form_input {
+  width: 594px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+}
+
+.form_textarea {
+  width: 594px;
+  height: 160px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+}
+
+.form_input_cover {
+  height: 30px;
+  width: 500px;
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding-right: 110px;
+  font-size: 14px;
+  background-color: var(--bg-color);
+  margin-top: 5px;
+}
+
+.form_input_cover::file-selector-button {
+  height: calc(100% + 2px);
+  width: 100px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-left: 1px solid var(--color-border);
+  border-radius: 4px 0 0 4px;
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.create_video_btn[data-theme="dark"] {
+  --bg-color: black;
+}
+
+.create_video_btn[data-theme="light"] {
+  --bg-color: white;
+}
+
+.create_video_btn {
+  background-color: var(--bg-color);
+  position: relative;
+  width: 212px;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  transition: all ease 0.3s;
+
+  &::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(90deg, #f31260, #006fee);
+    background-size: 100%;
+    border-radius: 8px;
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    z-index: -1;
+  }
+
+  &:hover {
+    background: linear-gradient(90deg, #f31260, #006fee);
+    color: white;
+  }
+}

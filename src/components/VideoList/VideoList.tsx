@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllVideos } from "../../features/videos/videos";
+import { getAllVideos, getVideoTags } from "../../features/videos/videos";
 import { RootState, AppDispatch } from "../../store";
 import Styles from "./VideoList.module.css";
 import { Link } from "react-router-dom";
@@ -10,9 +10,11 @@ export const VideoList = () => {
   const { data, loading, error } = useSelector(
     (state: RootState) => state.video
   );
+  // const { data: tags } = useSelector((state: RootState) => state.video.tags);
 
   useEffect(() => {
     dispatch(getAllVideos());
+    dispatch(getVideoTags());
   }, [dispatch]);
 
   if (loading === true) return <div>Loading videos...</div>;
@@ -33,6 +35,11 @@ export const VideoList = () => {
               {/* <div className={Styles["video_item_avatar"]}></div> */}
               <div className={Styles["video_item_text"]}>
                 <h4 className={Styles["video_item_title"]}>{video.title}</h4>
+                {/* <p>
+                  {tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </p> */}
                 <p className={Styles["video_item_login"]}>{video.user.login}</p>
                 <div className={Styles["video_item_details"]}>
                   <p className={Styles["video_item_views"]}>

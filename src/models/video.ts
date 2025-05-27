@@ -17,8 +17,21 @@ export interface IVideo {
   updatedAt: string;
 }
 
+export interface IVideoCreate {
+  title: string;
+  description: string;
+  tags: string[];
+  cover: string;
+  videoUrl: string;
+}
+
 export interface IVideoState {
   data: IVideo[];
   loading: boolean;
   error: string | null;
+  tags: {
+    data: string[];
+    loading: boolean;
+    error: string | null;
+  };
 }

@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserRegister, selectIsAuth } from "../../features/auth/auth";
 import { AppDispatch, RootState } from "../../store";
+import axios from "../../api/config";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,6 +15,7 @@ export const RegisterPage = () => {
     register,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors, isValid },
   } = useForm<IRegisterUser>({
     defaultValues: {
@@ -22,6 +24,7 @@ export const RegisterPage = () => {
       login: "",
       email: "",
       password: "",
+      avatar: "",
     },
     mode: "onChange",
   });
@@ -37,6 +40,23 @@ export const RegisterPage = () => {
   };
 
   if (isAuth) return <Navigate to={"/"} />;
+
+  const handleChangeFile = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files?.[0];
+
+      if (!file) return;
+
+      formData.append("avatar", file);
+      const { data } = await axios.post("/uploads/avatars", formData);
+      setValue("avatar", data.url);
+    } catch (error) {
+      console.error("Ошибка при загрузке аватарки", error);
+    }
+  };
 
   return (
     <section className={Styles["login_page"]}>
@@ -95,6 +115,25 @@ export const RegisterPage = () => {
               id="password"
               className={Styles["form_input"]}
               {...register("password", { required: "Укажите пароль" })}
+              data-theme={theme}
+            />
+          </div>
+          <div className={Styles["form_row"]}>
+            <label htmlFor="avatar">Аватарка</label>
+            <input
+              type="file"
+              id="avatar"
+              className={Styles["form_input"]}
+              data-theme={theme}
+              onChange={handleChangeFile}
+            />
+          </div>
+          <div className={Styles["form_row"]}>
+            <label htmlFor="coverUser">Обложка профиля</label>
+            <input
+              type="file"
+              id="coverUser"
+              className={Styles["form_input"]}
               data-theme={theme}
             />
           </div>

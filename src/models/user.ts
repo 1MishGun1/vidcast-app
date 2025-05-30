@@ -13,7 +13,9 @@ export interface IUser {
 }
 
 export interface IUserState {
-  data: IUser | null;
+  currentUser: IUser | null;
+  selectedUser: IUser | null;
+  // users: IUser[];
   loading: boolean;
   error: string | null;
 }

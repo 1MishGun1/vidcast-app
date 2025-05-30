@@ -1,0 +1,73 @@
+.chanel_page {
+  margin: 20px 100px 0px 100px;
+}
+
+.chanel_cover_user {
+  display: block;
+  background-color: grey;
+  width: auto;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.chanel_user_info {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.chanel_user_avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.chanel_user_info {
+  display: flex;
+  gap: 20px;
+}
+
+.chanel_user_name {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.chanel_user_login {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.chanel_user_count_sub {
+  margin-bottom: 10px;
+}
+
+.chanel_user_sub_btn {
+  border: 1px solid var(--color-border);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 10px;
+  color: var(--color);
+  transition: all ease 0.3s;
+
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(243, 18, 96, 1) 25%,
+      rgba(0, 111, 238, 1) 75%
+    );
+    color: white;
+    border: 1px solid transparent;
+  }
+}
+
+.chanel_user_sub_btn[data-theme="light"] {
+  --color-border: black;
+  --color: black;
+}
+
+.chanel_user_sub_btn[data-theme="dark"] {
+  --color-border: white;
+  --color: white;
+}

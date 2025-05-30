@@ -32,8 +32,18 @@ export const fetchAuthMe = createAsyncThunk<IUser>(
   }
 );
 
+export const getUserById = createAsyncThunk<IUser, string>(
+  "auth/getUserById",
+  async (userId) => {
+    const { data } = await axios.get(`/users/${userId}`);
+    return data;
+  }
+);
+
 const initialState: IUserState = {
-  data: null,
+  currentUser: null,
+  selectedUser: null,
+  // users: [],
   loading: false,
   error: null,
 };
@@ -43,13 +53,14 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.data = null;
+      state.currentUser = null;
       state.loading = false;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
+      // Authorization user
       .addCase(fetchUserData.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -58,27 +69,27 @@ export const authSlice = createSlice({
         fetchUserData.fulfilled,
         (state, action: PayloadAction<IUser>) => {
           state.loading = false;
-          state.data = action.payload;
+          state.currentUser = action.payload;
         }
       )
       .addCase(fetchUserData.rejected, (state) => {
         state.loading = false;
         state.error = "Error login user";
       })
-
+      // Get auth user
       .addCase(fetchAuthMe.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchAuthMe.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.loading = false;
-        state.data = action.payload;
+        state.currentUser = action.payload;
       })
       .addCase(fetchAuthMe.rejected, (state) => {
         state.loading = false;
         state.error = "Error login user";
       })
-
+      // Register user
       .addCase(fetchUserRegister.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -87,17 +98,35 @@ export const authSlice = createSlice({
         fetchUserRegister.fulfilled,
         (state, action: PayloadAction<IUser>) => {
           state.loading = false;
-          state.data = action.payload;
+          state.currentUser = action.payload;
         }
       )
       .addCase(fetchUserRegister.rejected, (state) => {
         state.loading = false;
         state.error = "Error login user";
+      })
+      // Get all users
+      .addCase(getUserById.pending, (state) => {
+        state.loading = true;
+        state.selectedUser = null;
+        state.error = null;
+      })
+      .addCase(getUserById.fulfilled, (state, action: PayloadAction<IUser>) => {
+        state.loading = false;
+        state.selectedUser = action.payload;
+      })
+      .addCase(getUserById.rejected, (state) => {
+        state.loading = false;
+        state.error = "Error getting user";
       });
   },
 });
 
-export const selectIsAuth = (state: RootState) => Boolean(state.auth.data);
+export const selectIsAuth = (state: RootState) =>
+  Boolean(state.auth.currentUser);
+export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
+export const electSelectedUser = (state: RootState) => state.auth.selectedUser;
+// export const selectAllUsers = (state: RootState) => state.auth.users;
 
 export const { logout } = authSlice.actions;
 

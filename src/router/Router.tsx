@@ -7,6 +7,8 @@ import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { CreateVideoPage } from "../pages/CreateVideoPage/CreateVideoPage";
 import { ChanelPage } from "../pages/ChanelPage/ChanelPage";
+import { VideosChanelPage } from "../pages/VideosChanelPage/VideosChanelPage";
+import { PlaylistsChanelPage } from "../pages/PlaylistsChanelPage/PlaylistsChanelPage";
 
 export const Router = () => {
   return (
@@ -16,6 +18,8 @@ export const Router = () => {
         <Route path="/videos/:id" element={<FullVideoPage />} />
         <Route path="/create/video" element={<CreateVideoPage />} />
         <Route path="/chanel/:id" element={<ChanelPage />} />
+        <Route path="/chanel/videos/:id" element={<VideosChanelPage />} />
+        <Route path="/chanel/playlists/:id" element={<PlaylistsChanelPage />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />

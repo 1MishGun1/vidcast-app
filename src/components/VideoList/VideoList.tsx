@@ -4,6 +4,7 @@ import { getAllVideos, getVideoTags } from "../../features/videos/videos";
 import { RootState, AppDispatch } from "../../store";
 import Styles from "./VideoList.module.css";
 import { Link } from "react-router-dom";
+// import { getUserById } from "../../features/auth/auth";
 
 export const VideoList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,7 @@ export const VideoList = () => {
   useEffect(() => {
     dispatch(getAllVideos());
     dispatch(getVideoTags());
+    // dispatch(getUserById());
   }, [dispatch]);
 
   if (loading === true) return <div>Loading videos...</div>;
@@ -40,7 +42,12 @@ export const VideoList = () => {
                     <span key={tag}>{tag}</span>
                   ))}
                 </p> */}
-                <p className={Styles["video_item_login"]}>{video.user.login}</p>
+                <Link
+                  to={`/chanel/${video.user._id}`}
+                  className={Styles["video_item_login"]}
+                >
+                  {video.user.login}
+                </Link>
                 <div className={Styles["video_item_details"]}>
                   <p className={Styles["video_item_views"]}>
                     {video.views} просмотров

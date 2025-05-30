@@ -64,24 +64,24 @@ export const SideBar = () => {
         </div>
 
         <div className={Styles.nav__items}>
-          <Link to={"/"} className={Styles.nav__item}>
-            <FaFireAlt size={24} />
+          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
+            <FaFireAlt size={22} />
             {!isShort && <span>Тренды</span>}
           </Link>
-          <Link to={"/"} className={Styles.nav__item}>
-            <FaRegUserCircle size={24} />
+          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
+            <FaRegUserCircle size={22} />
             {!isShort && <span>Ваш канал</span>}
           </Link>
-          <Link to={"/"} className={Styles.nav__item}>
-            <RiPlayList2Fill size={24} />
+          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
+            <RiPlayList2Fill size={22} />
             {!isShort && <span>Плейлисты</span>}
           </Link>
-          <Link to={"/"} className={Styles.nav__item}>
-            <FaHistory size={24} />
+          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
+            <FaHistory size={22} />
             {!isShort && <span>История</span>}
           </Link>
-          <Link to={"/"} className={Styles.nav__item}>
-            <BiLike size={24} />
+          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
+            <BiLike size={22} />
             {!isShort && <span>Лайки</span>}
           </Link>
           {isAuth ? (

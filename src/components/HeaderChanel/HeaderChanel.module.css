@@ -1,0 +1,34 @@
+.chanel_nav {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.chanel_nav[data-theme="light"] {
+  --color-border: black;
+  --color: black;
+}
+
+.chanel_nav[data-theme="dark"] {
+  --color-border: white;
+  --color: white;
+}
+
+.chanel_nav_link {
+  padding: 8px 10px;
+  transition: all ease 0.3s;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.134);
+  }
+}
+
+.chanel_nav_link_active {
+  padding: 8px 10px;
+  background-color: rgba(255, 255, 255, 0.134);
+  border-radius: 8px;
+}

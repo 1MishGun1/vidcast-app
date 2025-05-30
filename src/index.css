@@ -18,10 +18,6 @@ button[data-theme="dark"] {
   --text-color: white;
 }
 
-a[data-theme="dark"] {
-  --border-color: white;
-}
-
 body[data-theme="light"] {
   --bg-color: white;
   --text-color: black;
@@ -32,10 +28,6 @@ a[data-theme="light"],
 p[data-theme="light"],
 button[data-theme="light"] {
   --text-color: black;
-}
-
-a[data-theme="light"] {
-  --border-color: black;
 }
 
 body {

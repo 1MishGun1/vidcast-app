@@ -4,37 +4,3 @@
   flex-wrap: wrap;
   gap: 20px;
 }
-
-.video__item {
-  width: 400px;
-}
-
-.video_item_preview {
-  height: 200px;
-  background-color: grey;
-  border-radius: 5px;
-}
-
-/* .video_item_info {
-  display: flex;
-  gap: 10px;
-} */
-
-/* .video_item_avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: grey;
-} */
-
-.video_item_title {
-  font-size: 1rem;
-  margin: 6px 0;
-}
-
-.video_item_details {
-  display: flex;
-  gap: 4px;
-  font-size: 1rem;
-  margin-top: 4px;
-}

@@ -1,0 +1,20 @@
+.video__item {
+  width: 400px;
+}
+
+.video_item_preview {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.video_item_title {
+  font-size: 1rem;
+  margin: 6px 0;
+}
+
+.video_item_details {
+  display: flex;
+  gap: 4px;
+  font-size: 1rem;
+  margin-top: 4px;
+}

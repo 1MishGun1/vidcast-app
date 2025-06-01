@@ -2,12 +2,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import { videoReducer } from "./features/videos/videos";
 import { themeReducer } from "./features/theme/theme";
 import { authReducer } from "./features/auth/auth";
+import { playlistReducer } from "./features/playlists/playlists";
+import { reactionReducer } from "./features/reactions/reactions";
 
 export const store = configureStore({
   reducer: {
     video: videoReducer,
     theme: themeReducer,
     auth: authReducer,
+    playlist: playlistReducer,
+    reaction: reactionReducer,
   },
 });
 

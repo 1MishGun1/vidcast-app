@@ -7,9 +7,9 @@ export interface IVideo {
   user: {
     _id: string;
     login: string;
-    name?: string;
-    surname?: string;
-    avatar?: string;
+    name: string;
+    surname: string;
+    avatar: string;
   };
   cover: string;
   videoUrl: string;
@@ -31,6 +31,11 @@ export interface IVideoState {
   error: string | null;
   tags: {
     data: string[];
+    loading: boolean;
+    error: string | null;
+  };
+  userVideos: {
+    data: IVideo[];
     loading: boolean;
     error: string | null;
   };

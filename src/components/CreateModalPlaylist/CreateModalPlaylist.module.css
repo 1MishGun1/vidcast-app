@@ -1,0 +1,41 @@
+.modalInner {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal_input {
+  background-color: transparent;
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  resize: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal_btn {
+  padding: 6px 12px;
+  border: none;
+  border: 1px solid white;
+  border-radius: 6px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal_btn:hover {
+  background-color: #4f4f4f;
+  color: white;
+}

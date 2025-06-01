@@ -27,11 +27,28 @@ export const createVideo = createAsyncThunk<IVideo, IVideoCreate>(
   }
 );
 
+export const getUserVideo = createAsyncThunk<IVideo[], string>(
+  "videos/getUserVideo",
+  async (userId) => {
+    try {
+      const { data } = await axios.get(`/videos?userId=${userId}`);
+      return data;
+    } catch (error: any) {
+      return "Error loading user videos";
+    }
+  }
+);
+
 const initialState: IVideoState = {
   data: [],
   loading: false,
   error: null,
   tags: {
+    data: [],
+    loading: false,
+    error: null,
+  },
+  userVideos: {
     data: [],
     loading: false,
     error: null,
@@ -93,6 +110,23 @@ export const videoSlice = createSlice({
       .addCase(getVideoTags.rejected, (state) => {
         state.tags.loading = false;
         state.tags.error = "Error loading videos";
+      })
+
+      // Get user videos
+      .addCase(getUserVideo.pending, (state) => {
+        state.userVideos.loading = true;
+        state.userVideos.error = null;
+      })
+      .addCase(
+        getUserVideo.fulfilled,
+        (state, action: PayloadAction<IVideo[]>) => {
+          state.userVideos.loading = false;
+          state.userVideos.data = action.payload;
+        }
+      )
+      .addCase(getUserVideo.rejected, (state, action) => {
+        state.userVideos.loading = false;
+        state.userVideos.error = action.payload as string;
       });
   },
 });

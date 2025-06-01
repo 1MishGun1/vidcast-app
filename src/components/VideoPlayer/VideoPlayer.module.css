@@ -1,15 +1,15 @@
 .video-container {
   position: relative;
   background: #000;
-  margin: 1rem auto;
-  max-width: 1500px;
-  /* transition: all ease-in 0.3s; */
+  width: 100%;
+  max-width: 100%;
+  transition: all ease 0.3s;
   cursor: pointer;
 }
 
 .video-container.standard {
   width: 1500px;
-  border-radius: 14px;
+  border-radius: 10px;
 }
 
 .video-container.wide {
@@ -19,9 +19,8 @@
   right: 0;
   width: 100%;
   max-width: 100%;
-  height: auto;
+  /* height: auto; */
   margin: 0;
-  /* z-index: 1000; */
   display: flex;
   justify-content: center;
   background: #000;
@@ -44,7 +43,7 @@
 }
 
 .video-container.standard .video {
-  border-radius: 14px;
+  border-radius: 8px;
 }
 
 .video-container.wide .video,

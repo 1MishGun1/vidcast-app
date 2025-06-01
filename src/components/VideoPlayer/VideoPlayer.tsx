@@ -11,7 +11,11 @@ import {
   MdZoomInMap,
 } from "react-icons/md";
 import Styles from "./VideoPlayer.module.css";
-// import { videoSrc } from "../../assets/video2.webm";
+
+interface VideoPlayerProps {
+  videoUrl: string;
+  cover: string;
+}
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -21,7 +25,7 @@ const formatTime = (seconds: number): string => {
 
 type ViewMode = "standard" | "wide" | "fullscreen";
 
-const VideoPlayer: React.FC = () => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, cover }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null);
@@ -139,12 +143,16 @@ const VideoPlayer: React.FC = () => {
   };
 
   return (
-    <div className={`video-container ${viewMode}`} ref={containerRef}>
-      <div className="video-wrapper">
+    <div
+      className={`${Styles["video-container"]} ${Styles[viewMode]}`}
+      ref={containerRef}
+    >
+      <div className={Styles["video-wrapper"]}>
         <video
           ref={videoRef}
-          src="../../assets/video.mp4"
-          className="video"
+          src={videoUrl}
+          poster={cover}
+          className={Styles["video"]}
           onClick={handleVideoClick}
         />
       </div>

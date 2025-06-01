@@ -17,6 +17,7 @@ export const SideBar = () => {
   const [isHidden, setIsHidden] = useState(false);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const isAuth = useSelector(selectIsAuth);
+  const user = useSelector((state: RootState) => state.auth.currentUser);
 
   const toggleSideBar = () => {
     setIsShort(!isShort);
@@ -64,26 +65,66 @@ export const SideBar = () => {
         </div>
 
         <div className={Styles.nav__items}>
-          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
+          <Link to={"/trends"} className={Styles.nav__item} data-theme={theme}>
             <FaFireAlt size={22} />
             {!isShort && <span>Тренды</span>}
           </Link>
-          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
-            <FaRegUserCircle size={22} />
-            {!isShort && <span>Ваш канал</span>}
-          </Link>
-          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
-            <RiPlayList2Fill size={22} />
-            {!isShort && <span>Плейлисты</span>}
-          </Link>
-          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
-            <FaHistory size={22} />
-            {!isShort && <span>История</span>}
-          </Link>
-          <Link to={"/"} className={Styles.nav__item} data-theme={theme}>
-            <BiLike size={22} />
-            {!isShort && <span>Лайки</span>}
-          </Link>
+          {isAuth ? (
+            <Link
+              to={`/chanel/${user?._id}`}
+              className={Styles.nav__item}
+              data-theme={theme}
+            >
+              <FaRegUserCircle size={22} />
+              {!isShort && <span>Ваш канал</span>}
+            </Link>
+          ) : (
+            <Link to={"/login"} className={Styles.nav__item} data-theme={theme}>
+              <FaRegUserCircle size={22} />
+              {!isShort && <span>Ваш канал</span>}
+            </Link>
+          )}
+          {isAuth ? (
+            <Link
+              to={`/chanel/playlists/${user?._id}`}
+              className={Styles.nav__item}
+              data-theme={theme}
+            >
+              <RiPlayList2Fill size={22} />
+              {!isShort && <span>Плейлисты</span>}
+            </Link>
+          ) : (
+            <Link to={"/login"} className={Styles.nav__item} data-theme={theme}>
+              <RiPlayList2Fill size={22} />
+              {!isShort && <span>Плейлисты</span>}
+            </Link>
+          )}
+          {isAuth ? (
+            <Link
+              to={"/history"}
+              className={Styles.nav__item}
+              data-theme={theme}
+            >
+              <FaHistory size={22} />
+              {!isShort && <span>История</span>}
+            </Link>
+          ) : (
+            <Link to={"/login"} className={Styles.nav__item} data-theme={theme}>
+              <FaHistory size={22} />
+              {!isShort && <span>История</span>}
+            </Link>
+          )}
+          {isAuth ? (
+            <Link to={"/likes"} className={Styles.nav__item} data-theme={theme}>
+              <BiLike size={22} />
+              {!isShort && <span>Лайки</span>}
+            </Link>
+          ) : (
+            <Link to={"/login"} className={Styles.nav__item} data-theme={theme}>
+              <BiLike size={22} />
+              {!isShort && <span>Лайки</span>}
+            </Link>
+          )}
           {isAuth ? (
             <button
               className={Styles.nav__item_sign}

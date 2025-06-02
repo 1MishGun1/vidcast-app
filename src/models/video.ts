@@ -39,4 +39,9 @@ export interface IVideoState {
     loading: boolean;
     error: string | null;
   };
+  single: {
+    data: Record<string, IVideo>;
+    loading: boolean;
+    error: string | null;
+  };
 }

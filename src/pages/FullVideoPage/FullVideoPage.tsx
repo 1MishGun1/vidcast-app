@@ -14,6 +14,9 @@ import {
   getFetchReactions,
   toggleReaction,
 } from "../../features/reactions/reactions";
+import no_avatar from "../../assets/no_avatar.png";
+import { useSubscription } from "../../hooks/useSubscription";
+import { SaveToPlaylistModal } from "../../components/SaveToPlaylistModal/SaveToPlaylistModal";
 
 const MONTH_NAMES = [
   "Янв.",
@@ -34,9 +37,13 @@ export const FullVideoPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
   const [data, setData] = useState<IVideo | null>(null);
+  const [showSaveModal, setShowSaveModal] = useState(false);
   const isAuth = useSelector(selectIsAuth);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const reaction = useSelector((state: RootState) => state.reaction);
+  const channelId = data?.user?._id;
+  const { isSubscribed, subscribersCount, handleToggleSubscription } =
+    useSubscription(channelId, isAuth);
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -82,7 +89,11 @@ export const FullVideoPage = () => {
           <div className={Styles["full_video_user"]}>
             <img
               className={Styles["user_avatar"]}
-              src={`http://localhost:3333${data.user.avatar}`}
+              src={
+                data.user.avatar
+                  ? `http://localhost:3333${data.user.avatar}`
+                  : no_avatar
+              }
               alt={`avatar ${data.user.login}`}
             />
             <div className={Styles["user_info"]}>
@@ -92,10 +103,14 @@ export const FullVideoPage = () => {
               >
                 {data?.user.login}
               </Link>
-              <p>10 подписчиков</p>
+              <p>{subscribersCount} подписчиков</p>
             </div>
-            <button className={Styles["user_sub_btn"]} data-theme={theme}>
-              Подписаться
+            <button
+              className={Styles["user_sub_btn"]}
+              data-theme={theme}
+              onClick={handleToggleSubscription}
+            >
+              {isSubscribed ? "Отписаться" : "Подписаться"}
             </button>
           </div>
           <div className={Styles["full_video_btns"]}>
@@ -139,10 +154,17 @@ export const FullVideoPage = () => {
               type="submit"
               className={Styles["full_video_btn"]}
               data-theme={theme}
+              onClick={() => setShowSaveModal(true)}
             >
               <HiOutlineBookmark size={26} /> Сохранить
             </button>
           </div>
+          {showSaveModal && data && (
+            <SaveToPlaylistModal
+              videoId={data._id}
+              onClose={() => setShowSaveModal(false)}
+            />
+          )}
         </div>
         <div className={Styles["full_video_more_info"]}>
           <div className={Styles["full_video_views_date"]}>

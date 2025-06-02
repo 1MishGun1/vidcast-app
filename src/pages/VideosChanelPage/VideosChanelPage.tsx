@@ -41,17 +41,21 @@ export const VideosChanelPage = () => {
         surname={user.surname}
         login={user.login}
         theme={theme}
+        channelId={user._id}
+        coverProfile={user.coverProfile}
       />
       <HeaderChanel userId={user._id} theme={theme} />
       <div className={Styles["chanel_last_videos"]}>
         <h2 className={Styles["chanel_last_videos_title"]}>Видео</h2>
-        {videosLoading ? (
-          <p>Загрузка видео...</p>
-        ) : userVideos.length > 0 ? (
-          userVideos.map((video) => <VideoCard key={video._id} {...video} />)
-        ) : (
-          <p>Пользователь еще не загрузил видео</p>
-        )}
+        <div className={Styles["chanel_videos_items"]}>
+          {videosLoading ? (
+            <p>Загрузка видео...</p>
+          ) : userVideos.length > 0 ? (
+            userVideos.map((video) => <VideoCard key={video._id} {...video} />)
+          ) : (
+            <p>Пользователь еще не загрузил видео</p>
+          )}
+        </div>
       </div>
     </section>
   );

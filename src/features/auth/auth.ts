@@ -43,7 +43,6 @@ export const getUserById = createAsyncThunk<IUser, string>(
 const initialState: IUserState = {
   currentUser: null,
   selectedUser: null,
-  // users: [],
   loading: false,
   error: null,
 };

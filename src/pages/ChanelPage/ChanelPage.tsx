@@ -7,6 +7,7 @@ import { RootState, AppDispatch } from "../../store";
 import { HeaderChanel } from "../../components/HeaderChanel/HeaderChanel";
 import { InfoUserChanel } from "../../components/InfoUserChanel/InfoUserChanel";
 import { getUserVideo } from "../../features/videos/videos";
+import { VideoCard } from "../../components/VideoCard/VideoCard";
 
 export const ChanelPage = () => {
   const { id } = useParams();
@@ -41,6 +42,8 @@ export const ChanelPage = () => {
         surname={user.surname}
         login={user.login}
         theme={theme}
+        channelId={user._id}
+        coverProfile={user.coverProfile}
       />
       <HeaderChanel userId={user._id} theme={theme} />
       <div className={Styles["chanel_last_videos"]}>
@@ -49,41 +52,11 @@ export const ChanelPage = () => {
           {videosLoading ? (
             <p>Загрузка видео...</p>
           ) : userVideos.length > 0 ? (
-            userVideos.map((video) => (
-              <Link
-                to={`/videos/${video._id}`}
-                key={video._id}
-                className={Styles["video__item"]}
-              >
-                <div className={Styles["video_item_preview"]}></div>
-                <div className={Styles["video_item_info"]}>
-                  <div className={Styles["video_item_text"]}>
-                    <h4 className={Styles["video_item_title"]}>
-                      {video.title}
-                    </h4>
-                    <Link
-                      to={`/chanel/${video.user._id}`}
-                      className={Styles["video_item_login"]}
-                    >
-                      {video.user.login}
-                    </Link>
-                    <div className={Styles["video_item_details"]}>
-                      <p className={Styles["video_item_views"]}>
-                        {video.views} просмотров
-                      </p>
-                      <p>•</p>
-                      <p className={Styles["video_item_date"]}>
-                        {new Date(video.createdAt).getDate()}.
-                        {new Date(video.createdAt).getMonth()}.
-                        {new Date(video.createdAt).getFullYear()}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))
+            userVideos.map((video) => <VideoCard key={video._id} {...video} />)
           ) : (
-            <p>Пользователь еще не загрузил видео</p>
+            <p className={Styles["chanel_last_videos_no_video"]}>
+              Пользователь еще не загрузил видео
+            </p>
           )}
         </div>
       </div>

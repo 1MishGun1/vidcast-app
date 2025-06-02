@@ -5,6 +5,7 @@ import { authReducer } from "./features/auth/auth";
 import { playlistReducer } from "./features/playlists/playlists";
 import { reactionReducer } from "./features/reactions/reactions";
 import { subReducer } from "./features/subscribe/subscribe";
+import { commentReducer } from "./features/comments/comments";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     playlist: playlistReducer,
     reaction: reactionReducer,
     subscribe: subReducer,
+    comment: commentReducer,
   },
 });
 

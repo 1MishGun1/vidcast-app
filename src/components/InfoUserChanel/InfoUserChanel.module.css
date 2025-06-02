@@ -71,3 +71,34 @@
   --color-border: white;
   --color: white;
 }
+
+.chanel_cover_user_wrapper {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.chanel_cover_user {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover_buttons {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.cover_btn {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}

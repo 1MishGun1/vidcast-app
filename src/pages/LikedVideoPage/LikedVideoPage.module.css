@@ -1,0 +1,10 @@
+.like_page {
+  margin-top: 20px;
+}
+
+.video_like_items {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

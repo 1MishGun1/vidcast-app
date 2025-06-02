@@ -17,6 +17,12 @@ import {
 import no_avatar from "../../assets/no_avatar.png";
 import { useSubscription } from "../../hooks/useSubscription";
 import { SaveToPlaylistModal } from "../../components/SaveToPlaylistModal/SaveToPlaylistModal";
+import { CommentForm } from "../../components/CommentForm/CommentForm";
+import { CommentItem } from "../../components/CommentItem/CommentItem";
+import {
+  getCommentsByVideo,
+  selectCommentsByVideoId,
+} from "../../features/comments/comments";
 
 const MONTH_NAMES = [
   "Янв.",
@@ -41,6 +47,10 @@ export const FullVideoPage = () => {
   const isAuth = useSelector(selectIsAuth);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const reaction = useSelector((state: RootState) => state.reaction);
+  const commentVideo = useSelector((state: RootState) => {
+    if (!data) return [];
+    return selectCommentsByVideoId(data._id)(state);
+  });
   const channelId = data?.user?._id;
   const { isSubscribed, subscribersCount, handleToggleSubscription } =
     useSubscription(channelId, isAuth);
@@ -62,7 +72,10 @@ export const FullVideoPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (id) dispatch(getFetchReactions(id));
+    if (id) {
+      dispatch(getFetchReactions(id));
+      dispatch(getCommentsByVideo(id));
+    }
   }, [id]);
 
   const handleLike = () => {
@@ -192,6 +205,19 @@ export const FullVideoPage = () => {
             ))}
           </div>
           <p className={Styles["full_video_desc"]}>{data.description}</p>
+        </div>
+        <div className={Styles["full_video_comments"]}>
+          <h2 className={Styles["full_video_comments_title"]}>Комментарии</h2>
+          <CommentForm videoId={data._id} />
+          <div className={Styles["full_video_comments_item"]}>
+            {commentVideo.map((comment) => (
+              <CommentItem
+                key={comment._id}
+                comment={comment}
+                videoAuthorId={data.user._id}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

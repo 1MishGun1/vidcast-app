@@ -1,0 +1,26 @@
+.playlist_page {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.playlist_content {
+  display: flex;
+  align-items: top;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.description {
+  margin-right: 10px;
+  width: 300px;
+  /* color: #666; */
+}
+
+.videos_items {
+  display: flex;
+  gap: 10px;
+}

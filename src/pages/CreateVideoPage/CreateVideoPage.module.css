@@ -26,19 +26,25 @@
 
 .form_input[data-theme="dark"],
 .form_textarea[data-theme="dark"],
-.form_input_cover[data-theme="dark"] {
+.form_input_cover[data-theme="dark"],
+.create_video_btn[data-theme="dark"] {
   --color-border: white;
+  --color-text: white;
 }
 
 .form_input[data-theme="light"],
 .form_textarea[data-theme="light"],
-.form_input_cover[data-theme="light"] {
+.form_input_cover[data-theme="light"],
+.create_video_btn[data-theme="light"] {
   --color-border: black;
+  --color-text: black;
 }
 
 .form_input,
 .form_textarea {
   margin-top: 5px;
+  padding: 10px;
+  color: var(--color-text);
 }
 
 .form_input {
@@ -96,6 +102,7 @@
 
 .create_video_btn {
   background-color: var(--bg-color);
+  color: var(--color-text);
   position: relative;
   width: 212px;
   border-radius: 4px;

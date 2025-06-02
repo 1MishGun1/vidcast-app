@@ -6,6 +6,7 @@ import axios from "../../api/config";
 import { IVideoCreate } from "../../models/video";
 import { createVideo } from "../../features/videos/videos";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 export const CreateVideoPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -65,6 +66,10 @@ export const CreateVideoPage = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const onRedirect = () => {
+    if (!error) return <Navigate to={"/"} />;
   };
 
   return (
@@ -132,7 +137,11 @@ export const CreateVideoPage = () => {
               onChange={(e) => handleChangeFiles(e, "cover")}
             />
           </div>
-          <button type="submit" className={Styles["create_video_btn"]}>
+          <button
+            type="submit"
+            className={Styles["create_video_btn"]}
+            onClick={onRedirect}
+          >
             Опубликовать
           </button>
         </div>

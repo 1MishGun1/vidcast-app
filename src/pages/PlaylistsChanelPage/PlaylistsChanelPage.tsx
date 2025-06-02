@@ -7,6 +7,8 @@ import { HeaderChanel } from "../../components/HeaderChanel/HeaderChanel";
 import { InfoUserChanel } from "../../components/InfoUserChanel/InfoUserChanel";
 import Styles from "./PlaylistsChanelPage.module.css";
 import { CreateModalPlaylist } from "../../components/CreateModalPlaylist/CreateModalPlaylist";
+import { PlaylistCard } from "../../components/PlaylistCard/PlaylistCard";
+import { getPlaylistsByUserId } from "../../features/playlists/playlists";
 
 export const PlaylistsChanelPage = () => {
   const { id } = useParams();
@@ -18,10 +20,12 @@ export const PlaylistsChanelPage = () => {
   } = useSelector((state: RootState) => state.auth);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const [showModal, setShowModal] = useState(false);
+  const playlists = useSelector((state: RootState) => state.playlist.playlist);
 
   useEffect(() => {
     if (id) {
       dispatch(getUserById(id));
+      dispatch(getPlaylistsByUserId(id));
     }
   }, [dispatch, id]);
 
@@ -37,6 +41,8 @@ export const PlaylistsChanelPage = () => {
         surname={user.surname}
         login={user.login}
         theme={theme}
+        channelId={user._id}
+        coverProfile={user.coverProfile}
       />
       <HeaderChanel userId={user._id} theme={theme} />
       <div className={Styles["chanel_last_playlists"]}>
@@ -48,10 +54,14 @@ export const PlaylistsChanelPage = () => {
         >
           Создать плейлист
         </button>
-
         {showModal && (
           <CreateModalPlaylist onClose={() => setShowModal(false)} />
         )}
+        <div className={Styles["playlist_items"]}>
+          {playlists.map((pl) => (
+            <PlaylistCard key={pl._id} playlist={pl} />
+          ))}
+        </div>
       </div>
     </section>
   );

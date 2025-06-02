@@ -102,3 +102,9 @@
     border: 1px solid transparent;
   }
 }
+
+.playlist_items {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}

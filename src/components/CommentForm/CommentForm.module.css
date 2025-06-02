@@ -1,0 +1,30 @@
+.comment_form {
+  display: flex;
+  gap: 30px;
+  /* width: 100%; */
+  justify-content: space-between;
+}
+
+.comment_input {
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid white;
+  outline: none;
+  color: white;
+  width: 95%;
+  margin-bottom: 10px;
+}
+
+.comment_btn {
+  border: 1px solid white;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: #4f4f4f;
+    color: white;
+  }
+}

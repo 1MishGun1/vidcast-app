@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getAllVideos, getVideoTags } from "../../features/videos/videos";
-import { RootState, AppDispatch } from "../../store";
 import Styles from "./VideoCard.module.css";
+import no_avatar from "../../assets/no_avatar.png";
 
 interface IVideoInfoProps {
   _id: string;
@@ -12,6 +9,7 @@ interface IVideoInfoProps {
   user: {
     _id: string;
     login: string;
+    avatar: string;
   };
   views: number;
   createdAt: string;
@@ -27,27 +25,27 @@ export const VideoCard = ({
 }: IVideoInfoProps) => {
   return (
     <Link to={`/videos/${_id}`} key={_id} className={Styles["video__item"]}>
-      {/* <div className={Styles["video_item_preview"]}></div> */}
       <img
         src={`http://localhost:3333${cover}`}
         alt={title}
         className={Styles["video_item_preview"]}
       />
       <div className={Styles["video_item_info"]}>
-        {/* <div className={Styles["video_item_avatar"]}></div> */}
+        <img
+          src={user.avatar ? `http://localhost:3333${user.avatar}` : no_avatar}
+          className={Styles["video_item_avatar"]}
+          alt=""
+        />
         <div className={Styles["video_item_text"]}>
           <h4 className={Styles["video_item_title"]}>{title}</h4>
-          {/* <p>
-                  {tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </p> */}
-          <Link
-            to={`/chanel/${user._id}`}
-            className={Styles["video_item_login"]}
-          >
-            {user.login}
-          </Link>
+          <div className={Styles["video_item_user"]}>
+            <Link
+              to={`/chanel/${user._id}`}
+              className={Styles["video_item_login"]}
+            >
+              {user.login}
+            </Link>
+          </div>
           <div className={Styles["video_item_details"]}>
             <p className={Styles["video_item_views"]}>{views} просмотров</p>
             <p>•</p>

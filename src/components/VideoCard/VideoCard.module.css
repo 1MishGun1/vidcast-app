@@ -2,6 +2,18 @@
   width: 400px;
 }
 
+.video_item_info {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.video_item_avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
 .video_item_preview {
   width: 100%;
   border-radius: 5px;

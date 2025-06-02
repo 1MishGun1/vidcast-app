@@ -1,11 +1,20 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../api/config";
 import { IVideo, IVideoCreate, IVideoState } from "../../models/video";
+import { RootState } from "../../store";
 
 export const getAllVideos = createAsyncThunk("videos/getVideos", async () => {
   const { data } = await axios.get("/videos");
   return data;
 });
+
+export const getVideoById = createAsyncThunk<IVideo, string>(
+  "video/getVideoById",
+  async (id) => {
+    const { data } = await axios.get(`/videos/${id}`);
+    return data;
+  }
+);
 
 export const getVideoTags = createAsyncThunk(
   "videos/getVideoTags",
@@ -39,6 +48,14 @@ export const getUserVideo = createAsyncThunk<IVideo[], string>(
   }
 );
 
+export const getLikedVideo = createAsyncThunk<IVideo[]>(
+  "videos/getLikedVideo",
+  async () => {
+    const { data } = await axios.get("/reactions/liked/me");
+    return data;
+  }
+);
+
 const initialState: IVideoState = {
   data: [],
   loading: false,
@@ -50,6 +67,11 @@ const initialState: IVideoState = {
   },
   userVideos: {
     data: [],
+    loading: false,
+    error: null,
+  },
+  single: {
+    data: {},
     loading: false,
     error: null,
   },
@@ -76,6 +98,20 @@ export const videoSlice = createSlice({
       .addCase(getAllVideos.rejected, (state) => {
         state.tags.loading = false;
         state.tags.error = "Error loading videos";
+      })
+
+      // Get video by id
+      .addCase(getVideoById.pending, (state) => {
+        state.single.loading = true;
+        state.single.error = null;
+      })
+      .addCase(getVideoById.fulfilled, (state, action) => {
+        state.single.loading = false;
+        state.single.data[action.payload._id] = action.payload;
+      })
+      .addCase(getVideoById.rejected, (state, action) => {
+        state.single.loading = false;
+        state.single.error = action.error.message || "Ошибка загрузки видео";
       })
 
       // Create video
@@ -127,8 +163,28 @@ export const videoSlice = createSlice({
       .addCase(getUserVideo.rejected, (state, action) => {
         state.userVideos.loading = false;
         state.userVideos.error = action.payload as string;
+      })
+
+      // Get liked video by user
+      .addCase(getLikedVideo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getLikedVideo.fulfilled,
+        (state, action: PayloadAction<IVideo[]>) => {
+          state.loading = false;
+          state.data = action.payload;
+        }
+      )
+      .addCase(getLikedVideo.rejected, (state) => {
+        state.loading = false;
+        state.error = "Ошибка загрузки лайкнутых видео";
       });
   },
 });
+
+export const selectVideoById = (state: RootState, id: string) =>
+  state.video.single.data[id];
 
 export const videoReducer = videoSlice.reducer;

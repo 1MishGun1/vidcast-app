@@ -10,12 +10,13 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
   tokenUser: string;
+  subscriptions?: string[];
+  subscribers?: string[];
 }
 
 export interface IUserState {
   currentUser: IUser | null;
   selectedUser: IUser | null;
-  // users: IUser[];
   loading: boolean;
   error: string | null;
 }

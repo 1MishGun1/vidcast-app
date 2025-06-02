@@ -19,6 +19,14 @@ export const createPlaylist = createAsyncThunk<IPlaylist, IPlaylistCreate>(
   }
 );
 
+export const getPlaylistsByUserId = createAsyncThunk<IPlaylist[], string>(
+  "playlists/getPlaylistsByUserId",
+  async (userId) => {
+    const { data } = await axios.get(`/playlist/user/${userId}`);
+    return data;
+  }
+);
+
 const initialState: IPlaylistState = {
   playlist: [],
   status: "idle",
@@ -44,6 +52,11 @@ export const playlistsSlice = createSlice({
       .addCase(createPlaylist.rejected, (state) => {
         state.status = "failed";
         state.error = "Error create playlist";
+      })
+
+      .addCase(getPlaylistsByUserId.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.playlist = action.payload;
       });
   },
 });

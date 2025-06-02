@@ -9,6 +9,8 @@ import { CreateVideoPage } from "../pages/CreateVideoPage/CreateVideoPage";
 import { ChanelPage } from "../pages/ChanelPage/ChanelPage";
 import { VideosChanelPage } from "../pages/VideosChanelPage/VideosChanelPage";
 import { PlaylistsChanelPage } from "../pages/PlaylistsChanelPage/PlaylistsChanelPage";
+import { LikedVideoPage } from "../pages/LikedVideoPage/LikedVideoPage";
+import { PlaylistPage } from "../pages/PlaylistPage/PlaylistPage";
 
 export const Router = () => {
   return (
@@ -20,6 +22,8 @@ export const Router = () => {
         <Route path="/chanel/:id" element={<ChanelPage />} />
         <Route path="/chanel/videos/:id" element={<VideosChanelPage />} />
         <Route path="/chanel/playlists/:id" element={<PlaylistsChanelPage />} />
+        <Route path="/likes" element={<LikedVideoPage />} />
+        <Route path="/playlist/:id" element={<PlaylistPage />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />

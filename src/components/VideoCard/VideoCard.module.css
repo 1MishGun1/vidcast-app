@@ -19,6 +19,10 @@
   border-radius: 5px;
 }
 
+.video_item_preview_video {
+  width: 100%;
+}
+
 .video_item_title {
   font-size: 1rem;
   margin: 6px 0;

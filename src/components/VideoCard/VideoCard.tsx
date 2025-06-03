@@ -5,6 +5,7 @@ import no_avatar from "../../assets/no_avatar.png";
 interface IVideoInfoProps {
   _id: string;
   cover: string;
+  videoUrl: string;
   title: string;
   user: {
     _id: string;
@@ -18,6 +19,7 @@ interface IVideoInfoProps {
 export const VideoCard = ({
   _id,
   cover,
+  videoUrl,
   title,
   user,
   views,
@@ -25,11 +27,18 @@ export const VideoCard = ({
 }: IVideoInfoProps) => {
   return (
     <Link to={`/videos/${_id}`} key={_id} className={Styles["video__item"]}>
-      <img
-        src={`http://localhost:3333${cover}`}
-        alt={title}
-        className={Styles["video_item_preview"]}
-      />
+      {cover ? (
+        <img
+          src={`http://localhost:3333${cover}`}
+          alt={title}
+          className={Styles["video_item_preview"]}
+        />
+      ) : (
+        <video
+          src={`http://localhost:3333${videoUrl}`}
+          className={Styles["video_item_preview_video"]}
+        />
+      )}
       <div className={Styles["video_item_info"]}>
         <img
           src={user.avatar ? `http://localhost:3333${user.avatar}` : no_avatar}

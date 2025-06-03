@@ -35,6 +35,10 @@ export const RegisterPage = () => {
       const token = data.payload.tokenUser;
       window.localStorage.setItem("token", token);
     } else {
+      setError("root", {
+        type: "manual",
+        message: "Неверный логин или пароль",
+      });
       console.error("Ошибка регистрации");
     }
   };
@@ -62,6 +66,9 @@ export const RegisterPage = () => {
     <section className={Styles["login_page"]}>
       <img src="/img/2.jpg" alt="" className={Styles["login_img"]} />
       <div className={Styles["login_form_section"]}>
+        {errors.root && (
+          <div className={Styles["form_error"]}>{errors.root.message}</div>
+        )}
         <form
           className={Styles["form_login"]}
           onSubmit={handleSubmit(onSubmit)}
@@ -74,9 +81,20 @@ export const RegisterPage = () => {
               type="text"
               id="name"
               className={Styles["form_input"]}
-              {...register("name", { required: "Укажите имя" })}
+              {...register("name", {
+                required: "Укажите имя",
+                minLength: {
+                  value: 1,
+                  message: "Укажите имя",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.name && (
+              <span className={Styles["error_message"]}>
+                {errors.name.message}
+              </span>
+            )}
           </div>
           <div className={Styles["form_row"]}>
             <label htmlFor="surname">Фамилия</label>
@@ -84,9 +102,20 @@ export const RegisterPage = () => {
               type="text"
               id="surname"
               className={Styles["form_input"]}
-              {...register("surname", { required: "Укажите фамилию" })}
+              {...register("surname", {
+                required: "Укажите фамилию",
+                minLength: {
+                  value: 1,
+                  message: "Укажите фамилию",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.surname && (
+              <span className={Styles["error_message"]}>
+                {errors.surname.message}
+              </span>
+            )}
           </div>
           <div className={Styles["form_row"]}>
             <label htmlFor="login">Логин</label>
@@ -94,9 +123,20 @@ export const RegisterPage = () => {
               type="text"
               id="login"
               className={Styles["form_input"]}
-              {...register("login", { required: "Укажите логин" })}
+              {...register("login", {
+                required: "Укажите логин",
+                maxLength: {
+                  value: 20,
+                  message: "Логин должен быть не длиннее 20 символов",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.login && (
+              <span className={Styles["error_message"]}>
+                {errors.login.message}
+              </span>
+            )}
           </div>
           <div className={Styles["form_row"]}>
             <label htmlFor="email">E-mail</label>
@@ -104,9 +144,20 @@ export const RegisterPage = () => {
               type="email"
               id="email"
               className={Styles["form_input"]}
-              {...register("email", { required: "Укажите email" })}
+              {...register("email", {
+                required: "Укажите email",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Некорректный email",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.email && (
+              <span className={Styles["error_message"]}>
+                {errors.email.message}
+              </span>
+            )}
           </div>
           <div className={Styles["form_row"]}>
             <label htmlFor="password">Пароль</label>
@@ -114,28 +165,36 @@ export const RegisterPage = () => {
               type="password"
               id="password"
               className={Styles["form_input"]}
-              {...register("password", { required: "Укажите пароль" })}
+              {...register("password", {
+                required: "Укажите пароль",
+                minLength: {
+                  value: 6,
+                  message: "Пароль должен содержать минимум 6 символов",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.password && (
+              <span className={Styles["error_message"]}>
+                {errors.password.message}
+              </span>
+            )}
           </div>
           <div className={Styles["form_row"]}>
-            <label htmlFor="avatar">Аватарка</label>
+            <label htmlFor="avatar">Аватарка (необязательно)</label>
             <input
               type="file"
               id="avatar"
               className={Styles["form_input"]}
               data-theme={theme}
               onChange={handleChangeFile}
+              accept="image/jpeg, image/png, image/gif"
             />
-          </div>
-          <div className={Styles["form_row"]}>
-            <label htmlFor="coverUser">Обложка профиля</label>
-            <input
-              type="file"
-              id="coverUser"
-              className={Styles["form_input"]}
-              data-theme={theme}
-            />
+            {errors.avatar && (
+              <span className={Styles["error_message"]}>
+                {errors.avatar.message}
+              </span>
+            )}
           </div>
           <button
             type="submit"

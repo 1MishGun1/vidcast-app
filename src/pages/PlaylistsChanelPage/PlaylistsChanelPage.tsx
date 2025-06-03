@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getUserById } from "../../features/auth/auth";
+import { getUserById, selectIsAuth } from "../../features/auth/auth";
 import { RootState, AppDispatch } from "../../store";
 import { HeaderChanel } from "../../components/HeaderChanel/HeaderChanel";
 import { InfoUserChanel } from "../../components/InfoUserChanel/InfoUserChanel";
@@ -21,6 +21,13 @@ export const PlaylistsChanelPage = () => {
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const [showModal, setShowModal] = useState(false);
   const playlists = useSelector((state: RootState) => state.playlist.playlist);
+
+  const currentUserId = useSelector(
+    (state: RootState) => state.auth.currentUser?._id
+  );
+  const isAuth = useSelector((state: RootState) => state.auth.currentUser);
+
+  const isOwner = isAuth && currentUserId === user?._id;
 
   useEffect(() => {
     if (id) {
@@ -47,13 +54,15 @@ export const PlaylistsChanelPage = () => {
       <HeaderChanel userId={user._id} theme={theme} />
       <div className={Styles["chanel_last_playlists"]}>
         <h2 className={Styles["chanel_last_playlists_title"]}>Плейлисты</h2>
-        <button
-          className={Styles["chanel_playlists_btn"]}
-          data-theme={theme}
-          onClick={() => setShowModal(true)}
-        >
-          Создать плейлист
-        </button>
+        {isOwner && (
+          <button
+            className={Styles["chanel_playlists_btn"]}
+            data-theme={theme}
+            onClick={() => setShowModal(true)}
+          >
+            Создать плейлист
+          </button>
+        )}
         {showModal && (
           <CreateModalPlaylist onClose={() => setShowModal(false)} />
         )}

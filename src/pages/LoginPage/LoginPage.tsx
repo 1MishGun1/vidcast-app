@@ -29,13 +29,15 @@ export const LoginPage = () => {
       const token = data.payload.tokenUser;
       window.localStorage.setItem("token", token);
     } else {
+      setError("root", {
+        type: "manual",
+        message: "Неверный логин или пароль",
+      });
       console.error("Ошибка авторизации");
     }
   };
 
   if (isAuth) return <Navigate to={"/"} />;
-
-  console.log(isAuth);
 
   return (
     <section className={Styles["login_page"]}>
@@ -47,33 +49,68 @@ export const LoginPage = () => {
           data-theme={theme}
         >
           <h1 className={Styles["login_title"]}>Войти</h1>
+
+          {errors.root && (
+            <div className={Styles["form_error"]}>{errors.root.message}</div>
+          )}
+
           <div className={Styles["form_row"]}>
             <label htmlFor="login">Логин</label>
             <input
               type="text"
               id="login"
-              className={Styles["form_input"]}
-              {...register("login", { required: "Укажите логин" })}
+              className={`${Styles["form_input"]} ${
+                errors.login ? Styles["input_error"] : ""
+              }`}
+              {...register("login", {
+                required: "Укажите логин",
+                maxLength: {
+                  value: 20,
+                  message: "Логин должен быть не длиннее 20 символов",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.login && (
+              <span className={Styles["error_message"]}>
+                {errors.login.message}
+              </span>
+            )}
           </div>
+
           <div className={Styles["form_row"]}>
             <label htmlFor="password">Пароль</label>
             <input
               type="password"
               id="password"
-              className={Styles["form_input"]}
-              {...register("password", { required: "Укажите пароль" })}
+              className={`${Styles["form_input"]} ${
+                errors.password ? Styles["input_error"] : ""
+              }`}
+              {...register("password", {
+                required: "Укажите пароль",
+                minLength: {
+                  value: 6,
+                  message: "Пароль должен содержать минимум 6 символов",
+                },
+              })}
               data-theme={theme}
             />
+            {errors.password && (
+              <span className={Styles["error_message"]}>
+                {errors.password.message}
+              </span>
+            )}
           </div>
+
           <button
             type="submit"
             className={Styles["form_btn"]}
             data-theme={theme}
+            disabled={!isValid}
           >
             Войти
           </button>
+
           <div className={Styles["form_register"]}>
             <p className={Styles["form_question"]}>Нет аккаунта?</p>
             <Link to={"/register"} className={Styles["form_link_register"]}>

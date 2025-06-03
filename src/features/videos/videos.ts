@@ -56,6 +56,14 @@ export const getLikedVideo = createAsyncThunk<IVideo[]>(
   }
 );
 
+export const getTrendingVideos = createAsyncThunk<IVideo[]>(
+  "videos/getTrendingVideos",
+  async () => {
+    const { data } = await axios.get("/videos/trending");
+    return data;
+  }
+);
+
 const initialState: IVideoState = {
   data: [],
   loading: false,
@@ -180,6 +188,23 @@ export const videoSlice = createSlice({
       .addCase(getLikedVideo.rejected, (state) => {
         state.loading = false;
         state.error = "Ошибка загрузки лайкнутых видео";
+      })
+
+      // Get trending videos
+      .addCase(getTrendingVideos.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getTrendingVideos.fulfilled,
+        (state, action: PayloadAction<IVideo[]>) => {
+          state.loading = false;
+          state.data = action.payload;
+        }
+      )
+      .addCase(getTrendingVideos.rejected, (state) => {
+        state.loading = false;
+        state.error = "Ошибка загрузки трендовых видео";
       });
   },
 });

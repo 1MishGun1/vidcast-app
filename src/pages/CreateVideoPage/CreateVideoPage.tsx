@@ -6,13 +6,15 @@ import axios from "../../api/config";
 import { IVideoCreate } from "../../models/video";
 import { createVideo } from "../../features/videos/videos";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import VideoDropzone from "../../components/VideoDropzone/VideoDropzone";
 
 export const CreateVideoPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const { loading, error } = useSelector((state: RootState) => state.video);
   const [tagsInput, setTagsInput] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -63,13 +65,10 @@ export const CreateVideoPage = () => {
           .filter((tag) => tag !== ""),
       };
       await dispatch(createVideo(payload));
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const onRedirect = () => {
-    if (!error) return <Navigate to={"/"} />;
   };
 
   return (
@@ -113,12 +112,20 @@ export const CreateVideoPage = () => {
         <div className={Styles["create_video_right_part"]}>
           <div className={Styles["form_row"]}>
             <label htmlFor="file-video">Файл видео</label>
-            <input
-              type="file"
-              id="file-video"
-              className={Styles["form_input_video"]}
-              data-theme={theme}
-              onChange={(e) => handleChangeFiles(e, "videoUrl")}
+            <VideoDropzone
+              onFileSelect={async (file: File) => {
+                try {
+                  const formData = new FormData();
+                  formData.append("video", file);
+                  const { data } = await axios.post(
+                    "/uploads/videos",
+                    formData
+                  );
+                  setValue("videoUrl", data.url); // сохранить в форму
+                } catch (error) {
+                  console.error("Ошибка загрузки видео:", error);
+                }
+              }}
             />
           </div>
           <div className={Styles["form_row"]}>
@@ -137,11 +144,7 @@ export const CreateVideoPage = () => {
               onChange={(e) => handleChangeFiles(e, "cover")}
             />
           </div>
-          <button
-            type="submit"
-            className={Styles["create_video_btn"]}
-            onClick={onRedirect}
-          >
+          <button type="submit" className={Styles["create_video_btn"]}>
             Опубликовать
           </button>
         </div>

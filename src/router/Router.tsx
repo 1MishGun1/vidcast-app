@@ -11,6 +11,7 @@ import { VideosChanelPage } from "../pages/VideosChanelPage/VideosChanelPage";
 import { PlaylistsChanelPage } from "../pages/PlaylistsChanelPage/PlaylistsChanelPage";
 import { LikedVideoPage } from "../pages/LikedVideoPage/LikedVideoPage";
 import { PlaylistPage } from "../pages/PlaylistPage/PlaylistPage";
+import { TrendsPage } from "../pages/TrendsPage/TrendsPage";
 
 export const Router = () => {
   return (
@@ -24,6 +25,7 @@ export const Router = () => {
         <Route path="/chanel/playlists/:id" element={<PlaylistsChanelPage />} />
         <Route path="/likes" element={<LikedVideoPage />} />
         <Route path="/playlist/:id" element={<PlaylistPage />} />
+        <Route path="/trends" element={<TrendsPage />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />

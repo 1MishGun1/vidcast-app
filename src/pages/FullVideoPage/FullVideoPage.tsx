@@ -5,7 +5,7 @@ import axios from "../../api/config";
 import { IVideo } from "../../models/video";
 import Styles from "./FullVideoPage.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getVideoTags } from "../../features/videos/videos";
+import { getVideoTags, getAllVideos } from "../../features/videos/videos";
 import { selectIsAuth } from "../../features/auth/auth";
 import { RootState, AppDispatch } from "../../store";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
@@ -23,6 +23,7 @@ import {
   getCommentsByVideo,
   selectCommentsByVideoId,
 } from "../../features/comments/comments";
+import { VideoCard } from "../../components/VideoCard/VideoCard";
 
 const MONTH_NAMES = [
   "Янв.",
@@ -44,6 +45,7 @@ export const FullVideoPage = () => {
   const { id } = useParams();
   const [data, setData] = useState<IVideo | null>(null);
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const { data: videos } = useSelector((state: RootState) => state.video);
   const isAuth = useSelector(selectIsAuth);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const reaction = useSelector((state: RootState) => state.reaction);
@@ -69,6 +71,7 @@ export const FullVideoPage = () => {
 
   useEffect(() => {
     dispatch(getVideoTags());
+    dispatch(getAllVideos());
   }, [dispatch]);
 
   useEffect(() => {
@@ -89,6 +92,8 @@ export const FullVideoPage = () => {
   if (!data) {
     return <div className={Styles["not_found"]}>Видео не найдено</div>;
   }
+
+  const otherVideos = videos.filter((v) => v._id !== data._id).slice(0, 2);
 
   return (
     <section className={Styles["full_video_page"]}>
@@ -218,6 +223,25 @@ export const FullVideoPage = () => {
               />
             ))}
           </div>
+        </div>
+      </div>
+      <div className={Styles["full_video_right_part"]}>
+        <h2 className={Styles["other_video_title"]}>Другие видео</h2>
+        <div className={Styles["other_video_items"]}>
+          {otherVideos.map((video) => (
+            <div className={Styles["other_video_item"]}>
+              <VideoCard
+                key={video._id}
+                _id={video._id}
+                cover={video.cover}
+                videoUrl={video.videoUrl}
+                title={video.title}
+                user={video.user}
+                views={video.views}
+                createdAt={video.createdAt}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

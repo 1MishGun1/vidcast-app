@@ -35,6 +35,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease;
+  overflow-x: hidden;
 }
 
 h4,

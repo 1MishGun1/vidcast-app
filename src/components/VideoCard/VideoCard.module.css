@@ -21,6 +21,7 @@
 
 .video_item_preview_video {
   width: 100%;
+  border-radius: 5px;
 }
 
 .video_item_title {

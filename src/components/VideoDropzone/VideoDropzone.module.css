@@ -11,6 +11,7 @@
   text-align: center;
   padding: 1rem;
   transition: border-color 0.2s ease, background-color 0.2s ease;
+  margin-top: 5px;
 }
 
 .dropzone.dragActive {

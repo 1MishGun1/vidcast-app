@@ -5,4 +5,5 @@
 .chanel_last_videos_items {
   display: flex;
   margin-top: 10px;
+  gap: 14px;
 }

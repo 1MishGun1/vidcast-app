@@ -2,17 +2,9 @@
   margin: 20px 100px 0px 100px;
 }
 
-.chanel_cover_user {
-  display: block;
-  background-color: grey;
-  width: auto;
-  height: 200px;
-  border-radius: 10px;
-}
-
 .chanel_videos_items {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 14px;
 }

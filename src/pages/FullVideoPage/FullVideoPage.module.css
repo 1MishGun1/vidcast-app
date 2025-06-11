@@ -92,6 +92,7 @@
   padding: 0px 4px;
   height: 34px;
   transition: all ease 0.2s;
+  color: var(--color);
 
   &:hover {
     background-color: #4f4f4f;
@@ -99,8 +100,18 @@
   }
 }
 
+.full_video_more_info[data-theme="light"] {
+  --bg-color: #cfcfcf;
+  --color: black;
+}
+
+.full_video_more_info[data-theme="dark"] {
+  --bg-color: #2c2c2c;
+  --color: white;
+}
+
 .full_video_more_info {
-  background-color: #2c2c2c;
+  background-color: var(--bg-color);
   margin-top: 10px;
   padding: 4px 10px;
   border-radius: 4px;
@@ -159,8 +170,4 @@
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
-}
-
-.other_video_item {
-  width: 86%;
 }

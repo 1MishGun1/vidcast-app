@@ -24,6 +24,7 @@ import {
   selectCommentsByVideoId,
 } from "../../features/comments/comments";
 import { VideoCard } from "../../components/VideoCard/VideoCard";
+import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 
 const MONTH_NAMES = [
   "Янв.",
@@ -79,7 +80,7 @@ export const FullVideoPage = () => {
       dispatch(getFetchReactions(id));
       dispatch(getCommentsByVideo(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   const handleLike = () => {
     if (id) dispatch(toggleReaction({ videoId: id, type: "like" }));
@@ -90,16 +91,20 @@ export const FullVideoPage = () => {
   };
 
   if (!data) {
-    return <div className={Styles["not_found"]}>Видео не найдено</div>;
+    return (
+      <div className={Styles["not_found"]}>
+        <NotFoundPage />
+      </div>
+    );
   }
 
-  const otherVideos = videos.filter((v) => v._id !== data._id).slice(0, 2);
+  const otherVideos = videos.filter((v) => v._id !== data._id).slice(0, 7);
 
   return (
     <section className={Styles["full_video_page"]}>
       <div className={Styles["full_video_left_part"]}>
         <VideoPlayer
-          videoUrl={`http://localhost:3333${data.videoUrl}`}
+          hlsUrl={`http://localhost:3333${data.hlsUrl}`}
           cover={`http://localhost:3333${data.cover}`}
         />
         <h1 className={Styles["full_video_title"]}>{data?.title}</h1>
@@ -168,14 +173,25 @@ export const FullVideoPage = () => {
                 <AiOutlineDislike size={26} /> {reaction.likes}
               </Link>
             )}
-            <button
-              type="submit"
-              className={Styles["full_video_btn"]}
-              data-theme={theme}
-              onClick={() => setShowSaveModal(true)}
-            >
-              <HiOutlineBookmark size={26} /> Сохранить
-            </button>
+            {isAuth ? (
+              <button
+                type="submit"
+                className={Styles["full_video_btn"]}
+                data-theme={theme}
+                onClick={() => setShowSaveModal(true)}
+              >
+                <HiOutlineBookmark size={26} /> Сохранить
+              </button>
+            ) : (
+              <Link
+                to={"/login"}
+                onClick={handleLike}
+                className={Styles["full_video_btn"]}
+                data-theme={theme}
+              >
+                <HiOutlineBookmark size={26} /> Сохранить
+              </Link>
+            )}
           </div>
           {showSaveModal && data && (
             <SaveToPlaylistModal
@@ -184,7 +200,7 @@ export const FullVideoPage = () => {
             />
           )}
         </div>
-        <div className={Styles["full_video_more_info"]}>
+        <div className={Styles["full_video_more_info"]} data-theme={theme}>
           <div className={Styles["full_video_views_date"]}>
             <p className={Styles["full_video_views"]}>
               {data.views} просмотров
@@ -229,18 +245,17 @@ export const FullVideoPage = () => {
         <h2 className={Styles["other_video_title"]}>Другие видео</h2>
         <div className={Styles["other_video_items"]}>
           {otherVideos.map((video) => (
-            <div className={Styles["other_video_item"]}>
-              <VideoCard
-                key={video._id}
-                _id={video._id}
-                cover={video.cover}
-                videoUrl={video.videoUrl}
-                title={video.title}
-                user={video.user}
-                views={video.views}
-                createdAt={video.createdAt}
-              />
-            </div>
+            <VideoCard
+              key={video._id}
+              _id={video._id}
+              cover={video.cover}
+              hlsUrl={video.hlsUrl}
+              title={video.title}
+              user={video.user}
+              views={video.views}
+              createdAt={video.createdAt}
+              layout="short"
+            />
           ))}
         </div>
       </div>

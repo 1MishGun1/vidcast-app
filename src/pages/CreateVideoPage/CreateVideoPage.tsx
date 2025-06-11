@@ -4,13 +4,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import axios from "../../api/config";
 import { IVideoCreate } from "../../models/video";
-import { createVideo } from "../../features/videos/videos";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  createVideo,
+  getVideoById,
+  updateVideo,
+} from "../../features/videos/videos";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import VideoDropzone from "../../components/VideoDropzone/VideoDropzone";
 
 export const CreateVideoPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { id: editId } = useParams<{ id: string }>();
+  const video = useSelector((state: RootState) =>
+    editId ? state.video.single.data[editId] : null
+  );
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const { loading, error } = useSelector((state: RootState) => state.video);
   const [tagsInput, setTagsInput] = useState("");
@@ -26,15 +34,31 @@ export const CreateVideoPage = () => {
       title: "",
       description: "",
       tags: [],
-      videoUrl: "",
+      hlsUrl: "",
       cover: "",
     },
     mode: "onChange",
   });
 
+  useEffect(() => {
+    if (editId && !video) {
+      dispatch(getVideoById(editId));
+    }
+  }, [dispatch, editId]);
+
+  useEffect(() => {
+    if (video) {
+      setValue("title", video.title);
+      setValue("description", video.description);
+      setTagsInput(video.tags.join(","));
+      setValue("cover", video.cover);
+      setValue("hlsUrl", video.hlsUrl);
+    }
+  }, [video]);
+
   const handleChangeFiles = async (
     event: React.ChangeEvent<HTMLInputElement>,
-    fieldName: "videoUrl" | "cover"
+    fieldName: "hlsUrl" | "cover"
   ) => {
     try {
       const file = event.target.files?.[0];
@@ -42,11 +66,11 @@ export const CreateVideoPage = () => {
 
       const formData = new FormData();
 
-      const multerFieldName = fieldName === "videoUrl" ? "video" : "imgVideo";
+      const multerFieldName = fieldName === "hlsUrl" ? "video" : "imgVideo";
       formData.append(multerFieldName, file);
 
       const uploadUrl =
-        fieldName === "videoUrl" ? "/uploads/videos" : "/uploads/coversVideos";
+        fieldName === "hlsUrl" ? "/uploads/videos" : "/uploads/coversVideos";
 
       const { data } = await axios.post(uploadUrl, formData);
       setValue(fieldName, data.url);
@@ -64,7 +88,12 @@ export const CreateVideoPage = () => {
           .map((tag) => tag.trim())
           .filter((tag) => tag !== ""),
       };
-      await dispatch(createVideo(payload));
+
+      if (editId) {
+        await dispatch(updateVideo({ id: editId, videoData: payload }));
+      } else {
+        await dispatch(createVideo(payload));
+      }
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -103,11 +132,44 @@ export const CreateVideoPage = () => {
             <input
               type="text"
               id="tags"
+              value={tagsInput}
               className={Styles["form_input"]}
               data-theme={theme}
               onChange={(e) => setTagsInput(e.target.value)}
             />
           </div>
+          {video?.cover && video.hlsUrl ? (
+            <div className={Styles["preview_file_edit"]}>
+              {video?.cover && (
+                <div className={Styles["form_row"]}>
+                  <label>Текущая обложка:</label>
+                  <a
+                    href={`http://localhost:3333${video.cover}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`http://localhost:3333${video.cover}`}
+                      alt="preview"
+                      className={Styles["edit_img"]}
+                    />
+                  </a>
+                </div>
+              )}
+              {video?.hlsUrl && (
+                <div className={Styles["form_row"]}>
+                  <label>Текущее видео:</label>
+                  <video
+                    src={`http://localhost:3333${video.hlsUrl}`}
+                    controls
+                    className={Styles["edit_video"]}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className={Styles["create_video_right_part"]}>
           <div className={Styles["form_row"]}>
@@ -121,7 +183,8 @@ export const CreateVideoPage = () => {
                     "/uploads/videos",
                     formData
                   );
-                  setValue("videoUrl", data.url); // сохранить в форму
+                  console.log("hlsUrl от сервера:", data);
+                  setValue("hlsUrl", data.hlsUrl);
                 } catch (error) {
                   console.error("Ошибка загрузки видео:", error);
                 }
@@ -144,6 +207,8 @@ export const CreateVideoPage = () => {
               onChange={(e) => handleChangeFiles(e, "cover")}
             />
           </div>
+          <input type="hidden" {...register("cover")} />
+          <input type="hidden" {...register("hlsUrl")} />
           <button type="submit" className={Styles["create_video_btn"]}>
             Опубликовать
           </button>

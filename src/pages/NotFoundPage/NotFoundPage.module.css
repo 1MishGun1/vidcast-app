@@ -1,0 +1,41 @@
+.not_found_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.not_found_code {
+  font-size: 230px;
+}
+
+.not_found_title {
+  font-size: 40px;
+  margin: 10px 0;
+}
+
+.not_found_home[data-theme="light"] {
+  --color: black;
+  --color-hover: white;
+  --bg-color: black;
+}
+
+.not_found_home[data-theme="dark"] {
+  --color: white;
+  --color-hover: black;
+  --bg-color: white;
+}
+
+.not_found_home {
+  border: 1px solid var(--color);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 24px;
+  margin-top: 50px;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: var(--bg-color);
+    color: var(--color-hover);
+  }
+}

@@ -3,7 +3,32 @@
 }
 
 .playlist_items {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   gap: 14px;
+}
+
+.chanel_playlists_btn[data-theme="dark"] {
+  --bg-color-hover: white;
+  --color-text-hover: black;
+}
+
+.chanel_playlists_btn[data-theme="light"] {
+  --bg-color-hover: black;
+  --color-text-hover: white;
+}
+
+.chanel_playlists_btn {
+  margin-top: 5px;
+  border: 1px solid white;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: var(--bg-color-hover);
+    color: var(--color-text-hover);
+  }
 }

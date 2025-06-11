@@ -1,30 +1,42 @@
 .comment_form {
   display: flex;
   gap: 30px;
-  /* width: 100%; */
   justify-content: space-between;
+}
+
+.comment_input[data-theme="light"],
+.comment_btn[data-theme="light"] {
+  --color: black;
+  --color-hover: white;
+}
+
+.comment_input[data-theme="dark"],
+.comment_btn[data-theme="dark"] {
+  --color: white;
+  --color-hover: white;
 }
 
 .comment_input {
   border: none;
   background-color: transparent;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--color);
   outline: none;
-  color: white;
+  color: var(--color);
   width: 95%;
   margin-bottom: 10px;
 }
 
 .comment_btn {
-  border: 1px solid white;
+  border: 1px solid var(--color);
   border-radius: 6px;
   padding: 8px 12px;
   font-size: 14px;
   font-weight: 500;
   transition: all ease 0.3s;
+  color: var(--color);
 
   &:hover {
     background-color: #4f4f4f;
-    color: white;
+    color: var(--color-hover);
   }
 }

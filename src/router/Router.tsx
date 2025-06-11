@@ -12,24 +12,32 @@ import { PlaylistsChanelPage } from "../pages/PlaylistsChanelPage/PlaylistsChane
 import { LikedVideoPage } from "../pages/LikedVideoPage/LikedVideoPage";
 import { PlaylistPage } from "../pages/PlaylistPage/PlaylistPage";
 import { TrendsPage } from "../pages/TrendsPage/TrendsPage";
+import { SearchResultPage } from "../pages/SearchResultPage/SearchResultPage";
+import { FullVideoLayout } from "../components/FullVideoLayout/FullVideoLayout";
+import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 
 export const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="/videos/:id" element={<FullVideoPage />} />
         <Route path="/create/video" element={<CreateVideoPage />} />
+        <Route path="/create/video/:id" element={<CreateVideoPage />} />
         <Route path="/chanel/:id" element={<ChanelPage />} />
         <Route path="/chanel/videos/:id" element={<VideosChanelPage />} />
         <Route path="/chanel/playlists/:id" element={<PlaylistsChanelPage />} />
         <Route path="/likes" element={<LikedVideoPage />} />
         <Route path="/playlist/:id" element={<PlaylistPage />} />
         <Route path="/trends" element={<TrendsPage />} />
+        <Route path="/search" element={<SearchResultPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+      </Route>
+      <Route element={<FullVideoLayout />}>
+        <Route path="/videos/:id" element={<FullVideoPage />} />
       </Route>
     </Routes>
   );

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
 import { getPlaylistsByUserId } from "../../features/playlists/playlists";
 import axios from "../../api/config";
+import { Modal } from "../Modal/Modal";
 
 interface ISaveToPlaylist {
   videoId: string;
@@ -39,11 +40,12 @@ export const SaveToPlaylistModal: FC<ISaveToPlaylist> = ({
         console.error("Ошибка при добавлении:", error);
       }
     }
+    onClose();
   };
 
   return (
-    <div className={Styles.modal_overlay}>
-      <div className={Styles.modal}>
+    <Modal onClose={onClose}>
+      <div className={Styles.modalInner}>
         <h3>Сохранить в плейлист</h3>
         <ul className={Styles.playlist_list}>
           {playlists.map((pl) => (
@@ -60,10 +62,14 @@ export const SaveToPlaylistModal: FC<ISaveToPlaylist> = ({
           ))}
         </ul>
         <div className={Styles.actions}>
-          <button onClick={handleSave}>Сохранить</button>
-          <button onClick={onClose}>Отмена</button>
+          <button onClick={handleSave} className={Styles["btn_save"]}>
+            Сохранить
+          </button>
+          <button onClick={onClose} className={Styles["btn_save"]}>
+            Отмена
+          </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };

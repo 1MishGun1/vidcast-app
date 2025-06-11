@@ -8,3 +8,42 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+
+.no_likes {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.like_no_likes {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.no_likes_home[data-theme="dark"] {
+  --color: white;
+  --bg-color: white;
+  --color-hover: black;
+}
+
+.no_likes_home[data-theme="light"] {
+  --color: black;
+  --bg-color: black;
+  --color-hover: white;
+}
+
+.no_likes_home {
+  border: 1px solid var(--color);
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: var(--bg-color);
+    color: var(--color-hover);
+  }
+}

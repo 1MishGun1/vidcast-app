@@ -32,7 +32,7 @@ export const PlaylistCard: FC<IPlaylistProps> = ({ playlist }) => {
             className={Styles.thumbnail_img}
           />
         ) : (
-          <div className={Styles.thumbnail_placeholder}>Нет обложки</div>
+          ""
         )}
         <div className={Styles.thumbnail_overlay}>
           {playlist.videos.length} видео

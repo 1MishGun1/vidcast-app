@@ -192,3 +192,34 @@ input[type="range"]:hover::-moz-range-thumb {
   margin-right: 10px;
   font-size: 16px;
 }
+
+.quality-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.quality-menu {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 6px;
+  padding: 0 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin-top: 8px;
+  position: absolute;
+  bottom: 50px;
+}
+
+.quality-option {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+}
+
+.quality-option:hover,
+.quality-option.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 100%;
+}

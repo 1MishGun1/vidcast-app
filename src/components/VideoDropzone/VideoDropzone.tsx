@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState } from "react";
 import Styles from "./VideoDropzone.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";

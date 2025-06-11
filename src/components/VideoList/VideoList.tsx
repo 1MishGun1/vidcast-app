@@ -10,12 +10,10 @@ export const VideoList = () => {
   const { data, loading, error } = useSelector(
     (state: RootState) => state.video
   );
-  // const { data: tags } = useSelector((state: RootState) => state.video.tags);
 
   useEffect(() => {
     dispatch(getAllVideos());
     dispatch(getVideoTags());
-    // dispatch(getUserById());
   }, [dispatch]);
 
   if (loading === true) return <div>Loading videos...</div>;

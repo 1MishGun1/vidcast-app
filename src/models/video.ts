@@ -12,7 +12,7 @@ export interface IVideo {
     avatar: string;
   };
   cover: string;
-  videoUrl: string;
+  hlsUrl: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -22,7 +22,7 @@ export interface IVideoCreate {
   description: string;
   tags: string[];
   cover: string;
-  videoUrl: string;
+  hlsUrl: string;
 }
 
 export interface IVideoState {

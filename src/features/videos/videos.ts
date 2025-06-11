@@ -36,6 +36,22 @@ export const createVideo = createAsyncThunk<IVideo, IVideoCreate>(
   }
 );
 
+export const deleteVideo = createAsyncThunk<string, string>(
+  "videos/deleteVideo",
+  async (id) => {
+    await axios.delete(`/videos/${id}`);
+    return id;
+  }
+);
+
+export const updateVideo = createAsyncThunk<
+  IVideo,
+  { id: string; videoData: IVideoCreate }
+>("videos/updateVideo", async ({ id, videoData }) => {
+  const { data } = await axios.patch(`/videos/${id}`, videoData);
+  return data;
+});
+
 export const getUserVideo = createAsyncThunk<IVideo[], string>(
   "videos/getUserVideo",
   async (userId) => {
@@ -130,14 +146,36 @@ export const videoSlice = createSlice({
       .addCase(
         createVideo.fulfilled,
         (state, action: PayloadAction<IVideo>) => {
-          state.loading = true;
+          state.loading = false;
           state.data.unshift(action.payload);
         }
       )
       .addCase(createVideo.rejected, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = "Error create video";
       })
+
+      // Update video
+      .addCase(updateVideo.fulfilled, (state, action) => {
+        const updatedVideo = action.payload;
+        state.data = state.data.map((video) =>
+          video._id === updatedVideo._id ? updatedVideo : video
+        );
+        state.single.data[updatedVideo._id] = updatedVideo;
+      })
+
+      // Delete video
+      .addCase(
+        deleteVideo.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.data = state.data.filter(
+            (video) => video._id !== action.payload
+          );
+          state.userVideos.data = state.userVideos.data.filter(
+            (video) => video._id !== action.payload
+          );
+        }
+      )
 
       // Get tags
       .addCase(getVideoTags.pending, (state) => {

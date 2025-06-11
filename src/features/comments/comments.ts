@@ -27,17 +27,44 @@ export const createComment = createAsyncThunk(
   }
 );
 
-export const deleteComment = createAsyncThunk(
-  "comments/deleteComment",
-  async (commentId: string) => {
-    try {
-      await axios.delete(`/comments/${commentId}`);
-      return commentId;
-    } catch (error) {
-      console.error(error);
-    }
+export const deleteComment = createAsyncThunk<
+  string,
+  { commentId: string; userId: string }
+>("comments/deleteComment", async ({ commentId, userId }) => {
+  await axios.delete(`/comments/${commentId}`, {
+    params: { userId },
+  });
+  return commentId;
+});
+function findCommentById(comments: IComment[], id: string): IComment | null {
+  for (const comment of comments) {
+    if (comment._id === id) return comment;
+    const foundInReplies = findCommentById(comment.replies, id);
+    if (foundInReplies) return foundInReplies;
   }
-);
+  return null;
+}
+
+function deleteCommentRecursive(comments: IComment[], id: string): IComment[] {
+  return comments
+    .filter((c) => c._id !== id)
+    .map((comment) => ({
+      ...comment,
+      replies: deleteCommentRecursive(comment.replies, id),
+    }));
+}
+
+function sortComments(comments: IComment[]): IComment[] {
+  return comments
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .map((comment) => ({
+      ...comment,
+      replies: sortComments(comment.replies || []),
+    }));
+}
 
 const initialState: ICommentState = {
   comments: [],
@@ -74,29 +101,29 @@ export const commentSlice = createSlice({
         (state, action: PayloadAction<IComment>) => {
           const newComment = action.payload;
           if (newComment.parentComment) {
-            // ответ на комментарий
-            const parent = state.comments.find(
-              (c) => c._id === newComment.parentComment
+            const parent = findCommentById(
+              state.comments,
+              newComment.parentComment
             );
             if (parent) {
               parent.replies.push(newComment);
             }
           } else {
-            state.comments.unshift(newComment); // основной комментарий
+            state.comments.unshift(newComment);
           }
         }
       )
 
       // Delete comment
-      .addCase(deleteComment.fulfilled, (state, action) => {
-        const id = action.payload;
-        state.comments = state.comments
-          .filter((c) => c._id !== id)
-          .map((comment) => ({
-            ...comment,
-            replies: comment.replies.filter((r) => r._id !== id),
-          }));
-      });
+      .addCase(
+        deleteComment.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.comments = deleteCommentRecursive(
+            state.comments,
+            action.payload
+          );
+        }
+      );
   },
 });
 

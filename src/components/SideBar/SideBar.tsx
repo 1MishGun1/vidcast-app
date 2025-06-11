@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, selectIsAuth } from "../../features/auth/auth";
+import { toggleTheme } from "../../features/theme/theme";
 
 export const SideBar = () => {
   const dispatch = useDispatch();
@@ -192,12 +193,18 @@ export const SideBar = () => {
                       data-theme={theme}
                       onClick={onHandleLogout}
                     >
-                      <PiSignInBold size={24} />
                       <span>Выйти</span>
                     </button>
                   )}
                   <button className={Styles["user_data"]} data-theme={theme}>
                     Настройки
+                  </button>
+                  <button
+                    onClick={() => dispatch(toggleTheme())}
+                    className={Styles["user_data"]}
+                    data-theme={theme}
+                  >
+                    Тема: {theme === "light" ? "Светалая" : "Темная"}
                   </button>
                 </div>
               )}

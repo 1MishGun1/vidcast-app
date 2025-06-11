@@ -54,7 +54,9 @@
 }
 
 .collapse__button[data-theme="dark"],
-.user_login[data-theme="dark"] {
+.user_login[data-theme="dark"],
+.user_btn_logout[data-theme="dark"],
+.user_data[data-theme="dark"] {
   --color: white;
 }
 
@@ -172,10 +174,11 @@
 .user_popup {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   position: absolute;
   width: 100%;
-  top: -80px;
+  top: -100px;
   left: 0;
   background-color: var(--bg-color-popup);
   padding: 8px 12px;
@@ -183,11 +186,9 @@
   z-index: 999;
 }
 
-.user_btn_logout {
-  display: flex;
-  align-items: center;
+.user_btn_logout,
+.user_data {
   font-size: 16px;
   font-weight: 500;
-  gap: 16px;
   color: var(--color);
 }

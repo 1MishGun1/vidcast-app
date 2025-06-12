@@ -185,7 +185,7 @@ export const RegisterPage = () => {
             <input
               type="file"
               id="avatar"
-              className={Styles["form_input"]}
+              className={Styles["form_input_file"]}
               data-theme={theme}
               onChange={handleChangeFile}
               accept="image/jpeg, image/png, image/gif"

@@ -91,14 +91,18 @@
 
 .form_input[data-theme="light"],
 .form_btn[data-theme="light"],
-.form_input[data-theme="light"] {
+.form_input[data-theme="light"],
+.form_input_file[data-theme="light"] {
   --color: black;
+  --color-text: white;
 }
 
 .form_input[data-theme="dark"],
 .form_btn[data-theme="dark"],
-.form_input[data-theme="dark"] {
+.form_input[data-theme="dark"],
+.form_input_file[data-theme="dark"] {
   --color: white;
+  --color-text: black;
 }
 
 .form_input {
@@ -110,6 +114,7 @@
   font-weight: 600;
   margin-top: 4px;
   color: var(--color);
+  position: relative;
 }
 
 .form_btn {
@@ -121,6 +126,30 @@
   font-weight: 700;
   transition: all ease 0.3s;
   margin: 0 auto;
+  color: var(--color);
+}
+
+.form_input_file {
+  background-color: transparent;
+  border: 1px solid var(--color);
+  border-radius: 4px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: var(--color);
+  position: relative;
+}
+
+.form_input_file::file-selector-button {
+  height: 100%;
+  border: none;
+  background-color: var(--color);
+  color: var(--color-text);
+  border-radius: 4px 0 0 4px;
+  margin-right: 12px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-right: 1px solid var(--color);
 }
 
 .form_btn:hover {

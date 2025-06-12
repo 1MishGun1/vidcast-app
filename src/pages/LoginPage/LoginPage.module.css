@@ -121,6 +121,7 @@
   font-weight: 700;
   transition: all ease 0.3s;
   margin: 0 auto;
+    color: var(--color);
 }
 
 .form_btn:hover {

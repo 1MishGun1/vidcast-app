@@ -12,12 +12,14 @@ import { RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, selectIsAuth } from "../../features/auth/auth";
 import { toggleTheme } from "../../features/theme/theme";
+import { UserEditModal } from "../UserEditModal/UserEditModal";
 
 export const SideBar = () => {
   const dispatch = useDispatch();
   const [isShort, setIsShort] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const popupRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -196,7 +198,14 @@ export const SideBar = () => {
                       <span>Выйти</span>
                     </button>
                   )}
-                  <button className={Styles["user_data"]} data-theme={theme}>
+                  <button
+                    className={Styles["user_data"]}
+                    data-theme={theme}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenModal(true);
+                    }}
+                  >
                     Настройки
                   </button>
                   <button
@@ -221,6 +230,9 @@ export const SideBar = () => {
           )}
         </div>
       </nav>
+      {openModal && (
+        <UserEditModal open={openModal} onClose={() => setOpenModal(false)} />
+      )}
     </aside>
   );
 };

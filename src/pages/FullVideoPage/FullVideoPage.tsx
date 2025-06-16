@@ -25,6 +25,7 @@ import {
 } from "../../features/comments/comments";
 import { VideoCard } from "../../components/VideoCard/VideoCard";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
+import clsx from "clsx";
 
 const MONTH_NAMES = [
   "Янв.",
@@ -140,7 +141,10 @@ export const FullVideoPage = () => {
             {isAuth ? (
               <button
                 onClick={handleLike}
-                className={Styles["full_video_btn"]}
+                className={clsx(
+                  Styles["full_video_btn"],
+                  reaction.userReaction === "like" && Styles["active_reaction"]
+                )}
                 data-theme={theme}
               >
                 <AiOutlineLike size={26} /> {reaction.likes}
@@ -158,7 +162,10 @@ export const FullVideoPage = () => {
             {isAuth ? (
               <button
                 onClick={handleDislike}
-                className={Styles["full_video_btn"]}
+                className={clsx(
+                  Styles["full_video_btn"],
+                  reaction.userReaction === "dislike" && Styles["active_reaction"]
+                )}
                 data-theme={theme}
               >
                 <AiOutlineDislike size={26} /> {reaction.dislikes}
@@ -166,7 +173,7 @@ export const FullVideoPage = () => {
             ) : (
               <Link
                 to={"/login"}
-                onClick={handleLike}
+                onClick={handleDislike}
                 className={Styles["full_video_btn"]}
                 data-theme={theme}
               >

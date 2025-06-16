@@ -19,6 +19,7 @@ export const SaveToPlaylistModal: FC<ISaveToPlaylist> = ({
   const userId = useSelector((state: RootState) => state.auth.currentUser?._id);
   const playlists = useSelector((state: RootState) => state.playlist.playlist);
   const [selected, setSelected] = useState<string[]>([]);
+  const theme = useSelector((state: RootState) => state.theme.currentTheme);
 
   useEffect(() => {
     if (userId) {
@@ -55,6 +56,7 @@ export const SaveToPlaylistModal: FC<ISaveToPlaylist> = ({
                   type="checkbox"
                   checked={selected.includes(pl._id)}
                   onChange={() => toggleSelection(pl._id)}
+                  className={Styles["playlist_checkbox"]}
                 />
                 {pl.title}
               </label>
@@ -62,10 +64,18 @@ export const SaveToPlaylistModal: FC<ISaveToPlaylist> = ({
           ))}
         </ul>
         <div className={Styles.actions}>
-          <button onClick={handleSave} className={Styles["btn_save"]}>
+          <button
+            onClick={handleSave}
+            className={Styles["btn_save"]}
+            data-theme={theme}
+          >
             Сохранить
           </button>
-          <button onClick={onClose} className={Styles["btn_save"]}>
+          <button
+            onClick={onClose}
+            className={Styles["btn_save"]}
+            data-theme={theme}
+          >
             Отмена
           </button>
         </div>

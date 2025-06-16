@@ -10,7 +10,8 @@
 }
 
 .full_video_title {
-  margin: 10px 10px;
+  margin: 10px 0px;
+  font-size: 20px;
 }
 
 .full_video_short_info {
@@ -65,15 +66,21 @@
 }
 
 .user_sub_btn[data-theme="light"],
-.full_video_btn[data-theme="light"] {
+.full_video_btn[data-theme="light"],
+.active_reaction[data-theme="light"] {
   --color-border: black;
   --color: black;
+  --bg-active: black;
+  --color-active: white;
 }
 
 .user_sub_btn[data-theme="dark"],
-.full_video_btn[data-theme="dark"] {
+.full_video_btn[data-theme="dark"],
+.active_reaction[data-theme="dark"] {
   --color-border: white;
   --color: white;
+  --bg-active: white;
+  --color-active: black;
 }
 
 .full_video_btns {
@@ -98,6 +105,11 @@
     background-color: #4f4f4f;
     color: var(--color);
   }
+}
+
+.active_reaction {
+  background-color: var(--bg-active);
+  color: var(--color-active);
 }
 
 .full_video_more_info[data-theme="light"] {

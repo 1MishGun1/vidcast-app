@@ -18,19 +18,38 @@
   margin-bottom: 10px;
 }
 
+.playlist_checkbox {
+  margin-right: 6px;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 }
 
+.btn_save[data-theme="light"] {
+  --color: black;
+  --color-hover: white;
+}
+
+.btn_save[data-theme="dark"] {
+  --color: white;
+  --color-hover: black;
+}
+
 .btn_save {
   padding: 6px 12px;
   border: none;
-  border: 1px solid white;
+  border: 1px solid var(--color);
   border-radius: 6px;
   background-color: transparent;
-  color: white;
+  color: var(--color);
   cursor: pointer;
   transition: background 0.2s;
+
+  &:hover {
+    background-color: var(--color);
+    color: var(--color-hover);
+  }
 }

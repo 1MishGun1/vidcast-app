@@ -67,6 +67,7 @@
   height: 30px;
   width: 700px;
   position: relative;
+  padding: 5px;
   border: 1px solid var(--color-border);
   border-radius: 4px;
   box-sizing: border-box;

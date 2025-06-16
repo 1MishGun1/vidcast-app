@@ -10,9 +10,24 @@ import { RootState } from "../../store";
 
 export const fetchUserData = createAsyncThunk<IUser, ILoginUser>(
   "auth/fetchUserData",
-  async (params) => {
-    const { data } = await axios.post("/login", params);
-    return data;
+  async (params, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/login", params);
+      return data;
+    } catch (err: any) {
+      if (
+        err.response?.status === 403 &&
+        err.response.data?.message === "Пользователь заблокирован"
+      ) {
+        return rejectWithValue({
+          banned: true,
+          reason: err.response.data.reason,
+          expiresAt: err.response.data.expiresAt,
+          isPermanent: err.response.data.isPermanent,
+        });
+      }
+      return rejectWithValue({ message: "Неверный логин или пароль" });
+    }
   }
 );
 
@@ -39,6 +54,21 @@ export const getUserById = createAsyncThunk<IUser, string>(
     return data;
   }
 );
+
+export const updateUser = createAsyncThunk<
+  IUser,
+  Partial<IUser> & { oldPassword?: string; newPassword?: string },
+  { rejectValue: string }
+>("user/updateUser", async (data, thunkAPI) => {
+  try {
+    const response = await axios.patch("/me", data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message || "Ошибка обновления"
+    );
+  }
+});
 
 const initialState: IUserState = {
   currentUser: null,
@@ -75,6 +105,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = "Error login user";
       })
+
       // Get auth user
       .addCase(fetchAuthMe.pending, (state) => {
         state.loading = true;
@@ -88,6 +119,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = "Error login user";
       })
+
       // Register user
       .addCase(fetchUserRegister.pending, (state) => {
         state.loading = true;
@@ -104,6 +136,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = "Error login user";
       })
+
       // Get all users
       .addCase(getUserById.pending, (state) => {
         state.loading = true;
@@ -117,6 +150,19 @@ export const authSlice = createSlice({
       .addCase(getUserById.rejected, (state) => {
         state.loading = false;
         state.error = "Error getting user";
+      })
+
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Ошибка";
       });
   },
 });
@@ -125,7 +171,6 @@ export const selectIsAuth = (state: RootState) =>
   Boolean(state.auth.currentUser);
 export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
 export const electSelectedUser = (state: RootState) => state.auth.selectedUser;
-// export const selectAllUsers = (state: RootState) => state.auth.users;
 
 export const { logout } = authSlice.actions;
 

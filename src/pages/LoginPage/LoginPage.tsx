@@ -5,9 +5,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsAuth } from "../../features/auth/auth";
 import { AppDispatch, RootState } from "../../store";
+import { hideBanModal, showBanModal } from "../../features/banUsers/banUsers";
+import { BanModal } from "../../components/BanInfoModal/BanInfoModal";
 
 export const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const showBan = useSelector((state: RootState) => state.ban.show);
   const theme = useSelector((state: RootState) => state.theme.currentTheme);
   const isAuth = useSelector(selectIsAuth);
   const {
@@ -24,16 +27,19 @@ export const LoginPage = () => {
   });
 
   const onSubmit: SubmitHandler<ILoginUser> = async (values) => {
-    const data = await dispatch(fetchUserData(values));
-    if (fetchUserData.fulfilled.match(data)) {
-      const token = data.payload.tokenUser;
+    const resultAction = await dispatch(fetchUserData(values));
+
+    if (fetchUserData.fulfilled.match(resultAction)) {
+      const token = resultAction.payload.tokenUser;
       window.localStorage.setItem("token", token);
+    } else if ((resultAction.payload as any)?.banned) {
+      const { reason, expiresAt, isPermanent } = resultAction.payload as any;
+      dispatch(showBanModal({ reason, expiresAt, isPermanent }));
     } else {
       setError("root", {
         type: "manual",
         message: "Неверный логин или пароль",
       });
-      console.error("Ошибка авторизации");
     }
   };
 
@@ -118,6 +124,7 @@ export const LoginPage = () => {
             </Link>
           </div>
         </form>
+        {showBan && <BanModal onClose={() => dispatch(hideBanModal())} />}
       </div>
     </section>
   );

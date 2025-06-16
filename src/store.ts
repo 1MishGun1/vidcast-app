@@ -7,12 +7,14 @@ import { reactionReducer } from "./features/reactions/reactions";
 import { subReducer } from "./features/subscribe/subscribe";
 import { commentReducer } from "./features/comments/comments";
 import { searchReducer } from "./features/search/search";
+import { banReducer } from "./features/banUsers/banUsers";
 
 export const store = configureStore({
   reducer: {
     video: videoReducer,
     theme: themeReducer,
     auth: authReducer,
+    ban: banReducer,
     playlist: playlistReducer,
     reaction: reactionReducer,
     subscribe: subReducer,

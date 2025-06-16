@@ -26,12 +26,8 @@ export const Modal = ({ children, onClose }: TModalProps) => {
   };
 
   return (
-    <div className={Styles["modal_overlay"]}>
-      <div
-        className={Styles["modal"]}
-        data-theme={theme}
-        onClick={handleOverlayClick}
-      >
+    <div className={Styles["modal_overlay"]} onClick={handleOverlayClick}>
+      <div className={Styles["modal"]} data-theme={theme}>
         {children}
       </div>
     </div>

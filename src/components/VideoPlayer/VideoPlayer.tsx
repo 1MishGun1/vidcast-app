@@ -291,13 +291,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ hlsUrl, cover }) => {
                   )}
                 </div>
               )}
-              <button onClick={toggleWideScreen}>
+              {/* <button onClick={toggleWideScreen}>
                 {viewMode === "wide" ? (
                   <MdZoomInMap size={24} />
                 ) : (
                   <MdZoomOutMap size={24} />
                 )}
-              </button>
+              </button> */}
               <button onClick={toggleFullScreen}>
                 {viewMode === "fullscreen" ? (
                   <MdOutlineCloseFullscreen size={24} />

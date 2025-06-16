@@ -1,24 +1,42 @@
 import { useState } from "react";
 import { Modal } from "../Modal/Modal";
 import Styles from "./CreateModalPlaylist.module.css";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
-import { createPlaylist } from "../../features/playlists/playlists";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import {
+  createPlaylist,
+  updatePlaylist,
+} from "../../features/playlists/playlists";
+import { IPlaylist } from "../../models/playlist";
 
 type PropsModal = {
   onClose: () => void;
+  initialData?: IPlaylist;
 };
 
-export const CreateModalPlaylist = ({ onClose }: PropsModal) => {
+export const CreateModalPlaylist = ({ onClose, initialData }: PropsModal) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [isVisible, setIsVisible] = useState(true);
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [description, setDescription] = useState(
+    initialData?.description || ""
+  );
+  const [isVisible, setIsVisible] = useState(initialData?.isVisible ?? true);
+  const theme = useSelector((state: RootState) => state.theme.currentTheme);
 
   const handleSubmit = () => {
     if (!title.trim()) return;
 
-    dispatch(createPlaylist({ title, description, isVisible }));
+    if (initialData) {
+      dispatch(
+        updatePlaylist({
+          id: initialData._id,
+          data: { title, description, isVisible },
+        })
+      );
+    } else {
+      dispatch(createPlaylist({ title, description, isVisible }));
+    }
+
     onClose();
   };
 
@@ -32,26 +50,37 @@ export const CreateModalPlaylist = ({ onClose }: PropsModal) => {
           placeholder="Название"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          data-theme={theme}
         />
         <textarea
           className={Styles["modal_input"]}
           placeholder="Описание"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          data-theme={theme}
         />
         <label>
           <input
             type="checkbox"
             checked={isVisible}
             onChange={() => setIsVisible(!isVisible)}
+            className={Styles["modal_checkbox"]}
           />
           Сделать публичным
         </label>
         <div className={Styles.actions}>
-          <button className={Styles["modal_btn"]} onClick={handleSubmit}>
+          <button
+            className={Styles["modal_btn"]}
+            onClick={handleSubmit}
+            data-theme={theme}
+          >
             Создать
           </button>
-          <button className={Styles["modal_btn"]} onClick={onClose}>
+          <button
+            className={Styles["modal_btn"]}
+            onClick={onClose}
+            data-theme={theme}
+          >
             Отмена
           </button>
         </div>

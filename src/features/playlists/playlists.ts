@@ -27,6 +27,22 @@ export const getPlaylistsByUserId = createAsyncThunk<IPlaylist[], string>(
   }
 );
 
+export const updatePlaylist = createAsyncThunk<
+  IPlaylist,
+  { id: string; data: IPlaylistCreate }
+>("playlist/updatePlaylist", async ({ id, data }) => {
+  const response = await axios.patch(`/playlist/${id}`, data);
+  return response.data;
+});
+
+export const deletePlaylist = createAsyncThunk<string, string>(
+  "playlist/deletePlaylist",
+  async (id) => {
+    await axios.delete(`/playlist/${id}`);
+    return id;
+  }
+);
+
 const initialState: IPlaylistState = {
   playlist: [],
   status: "idle",
@@ -52,6 +68,18 @@ export const playlistsSlice = createSlice({
       .addCase(createPlaylist.rejected, (state) => {
         state.status = "failed";
         state.error = "Error create playlist";
+      })
+
+      .addCase(updatePlaylist.fulfilled, (state, action) => {
+        const index = state.playlist.findIndex(
+          (p) => p._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.playlist[index] = action.payload;
+        }
+      })
+      .addCase(deletePlaylist.fulfilled, (state, action) => {
+        state.playlist = state.playlist.filter((p) => p._id !== action.payload);
       })
 
       .addCase(getPlaylistsByUserId.fulfilled, (state, action) => {

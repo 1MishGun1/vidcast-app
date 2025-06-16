@@ -124,3 +124,19 @@
   font-size: 14px;
   width: 180px;
 }
+
+.video_item_preview_wrapper {
+  position: relative;
+}
+
+.video_item_duration {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-bottom: 4px;
+}

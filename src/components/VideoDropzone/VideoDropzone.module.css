@@ -18,3 +18,9 @@
   border-color: #4a90e2;
   background-color: #eef6ff;
 }
+
+.drag_text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

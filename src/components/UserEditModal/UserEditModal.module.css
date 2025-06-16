@@ -1,0 +1,81 @@
+.edit_user_modal {
+  padding: 10px;
+}
+
+.edit_user_title[data-theme="dark"],
+.edit_user_input[data-theme="dark"],
+.edit_user_btn[data-theme="dark"],
+.edit_user_file[data-theme="dark"] {
+  --color-text: white;
+  --color-text-hover: black;
+  --color-border: white;
+  --bg-color: white;
+  --bg-color-hover: white;
+}
+
+.edit_user_title[data-theme="light"],
+.edit_user_input[data-theme="light"],
+.edit_user_btn[data-theme="light"],
+.edit_user_file[data-theme="light"] {
+  --color-text: black;
+  --color-text-hover: white;
+  --color-border: black;
+  --bg-color: black;
+  --bg-color-hover: black;
+}
+
+.edit_user_title {
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.edit_user_inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit_user_input {
+  background-color: transparent;
+  outline: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  height: 24px;
+  padding-left: 4px;
+  color: var(--color-text);
+}
+
+.edit_user_file {
+  position: relative;
+  border: 1px solid var(--color-border);
+  height: 24px;
+  color: var(--color-text);
+}
+
+.edit_user_file::file-selector-button {
+  height: calc(100% + 2px);
+  width: 70px;
+  border-radius: 0 4px 4px 0;
+  border-left: 1px solid var(--color-border);
+  background-color: var(--bg-color-hover);
+  border: 1px solid var(--bg-color-hover);
+  color: var(--color-text-hover);
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.edit_user_btn {
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 4px 6px;
+  margin-top: 8px;
+  transition: all ease 0.3s;
+  color: var(--color-text);
+
+  &:hover {
+    background-color: var(--bg-color-hover);
+    color: var(--color-text-hover);
+  }
+}

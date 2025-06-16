@@ -209,6 +209,7 @@ input[type="range"]:hover::-moz-range-thumb {
   margin-top: 8px;
   position: absolute;
   bottom: 50px;
+  right: 10px;
 }
 
 .quality-option {

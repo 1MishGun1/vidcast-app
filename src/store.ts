@@ -8,6 +8,7 @@ import { subReducer } from "./features/subscribe/subscribe";
 import { commentReducer } from "./features/comments/comments";
 import { searchReducer } from "./features/search/search";
 import { banReducer } from "./features/banUsers/banUsers";
+import { historyReducer } from "./features/history/history";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     subscribe: subReducer,
     comment: commentReducer,
     search: searchReducer,
+    history: historyReducer
   },
 });
 

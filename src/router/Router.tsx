@@ -15,6 +15,7 @@ import { TrendsPage } from "../pages/TrendsPage/TrendsPage";
 import { SearchResultPage } from "../pages/SearchResultPage/SearchResultPage";
 import { FullVideoLayout } from "../components/FullVideoLayout/FullVideoLayout";
 import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
+import { HistoryPage } from "../pages/HistoryPage/HistoryPage";
 
 export const Router = () => {
   return (
@@ -30,6 +31,7 @@ export const Router = () => {
         <Route path="/playlist/:id" element={<PlaylistPage />} />
         <Route path="/trends" element={<TrendsPage />} />
         <Route path="/search" element={<SearchResultPage />} />
+        <Route path="/history" element={<HistoryPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route element={<AuthLayout />}>

@@ -26,9 +26,9 @@ export const useSubscription = (
     }
   }, [channelId, isAuth, dispatch]);
 
-  const handleToggleSubscription = () => {
+  const handleToggleSubscription = async () => {
     if (!channelId) return;
-    dispatch(toggleSubscription(channelId));
+    await dispatch(toggleSubscription(channelId));
   };
 
   return { isSubscribed, subscribersCount, handleToggleSubscription };

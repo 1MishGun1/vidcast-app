@@ -16,7 +16,7 @@ const initialState: ISubscriptionsState = {
 };
 
 export const toggleSubscription = createAsyncThunk<
-  { channelId: string; isSubscribed: boolean },
+  { channelId: string; isSubscribed: boolean; subscribersCount: number },
   string,
   { state: RootState }
 >("auth/toggleSubscription", async (channelId, { getState }) => {
@@ -59,23 +59,13 @@ export const subSlice = createSlice({
         state.error = null;
       })
       .addCase(toggleSubscription.fulfilled, (state, action) => {
-        const { channelId, isSubscribed } = action.payload;
+        const { channelId, isSubscribed, subscribersCount } = action.payload;
 
-        // Обновляем статус текущего канала
-        if (state.currentChannelStatus.channelId === channelId) {
-          state.currentChannelStatus.isSubscribed = isSubscribed;
-          state.currentChannelStatus.subscribersCount += isSubscribed ? 1 : -1;
-        }
-
-        // Обновляем общий список подписок
-        const index = state.subscriptions.findIndex(
-          (sub) => sub.channelId === channelId
-        );
-        if (index >= 0) {
-          state.subscriptions[index].isSubscribed = isSubscribed;
-        } else {
-          state.subscriptions.push({ channelId, isSubscribed });
-        }
+        state.currentChannelStatus = {
+          channelId,
+          isSubscribed,
+          subscribersCount,
+        };
 
         state.loading = false;
       })

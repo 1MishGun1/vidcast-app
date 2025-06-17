@@ -9,15 +9,14 @@
 
 .thumbnail {
   width: 100%;
-  height: 100%;
   border-radius: 8px;
-  background: #ccc;
   position: relative;
 }
 
 .thumbnail_img {
   width: 100%;
   border-radius: 8px;
+  position: relative;
 }
 
 .thumbnail_overlay {

@@ -3,7 +3,7 @@ export interface IPlaylist {
   title: string;
   description: string;
   isVisible: boolean;
-  user: string;
+  user: string | { _id: string };
   videos: string[];
   createdAt: string;
 }

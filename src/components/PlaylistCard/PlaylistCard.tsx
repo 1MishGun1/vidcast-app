@@ -20,8 +20,14 @@ export const PlaylistCard: FC<IPlaylistProps> = ({ playlist, onEdit }) => {
     selectVideoById(state, playlist.videos[playlist.videos.length - 1])
   );
   const [hovered, setHovered] = useState(false);
-  const currentUser = useSelector(selectCurrentUser);
-  const userId = currentUser?._id;
+  const currentUserId = useSelector(
+    (state: RootState) => state.auth.currentUser?._id
+  );
+
+  const isAuthor =
+    typeof playlist.user === "string"
+      ? playlist.user === currentUserId
+      : playlist.user._id === currentUserId;
 
   useEffect(() => {
     if (!video && playlist.videos.length > 0) {
@@ -62,14 +68,21 @@ export const PlaylistCard: FC<IPlaylistProps> = ({ playlist, onEdit }) => {
         </div>
       </Link>
 
-      {hovered && playlist.user === userId && (
+      {hovered && isAuthor && (
         <div className={Styles.actions}>
-          {onEdit && (
-            <button onClick={() => onEdit(playlist)}>
-              <MdModeEdit />
-            </button>
-          )}
-          <button onClick={handleDelete}>
+          <button
+            className={Styles["playlist__edit_button"]}
+            onClick={(e) => {
+              e.preventDefault();
+              onEdit?.(playlist);
+            }}
+          >
+            <MdModeEdit />
+          </button>
+          <button
+            className={Styles["playlist__delete_button"]}
+            onClick={handleDelete}
+          >
             <MdDelete />
           </button>
         </div>

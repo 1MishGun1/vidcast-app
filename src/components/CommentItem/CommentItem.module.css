@@ -1,7 +1,8 @@
 .comment {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .comment_user_info {
@@ -47,7 +48,6 @@
 .comment_user_btns {
   display: flex;
   gap: 4px;
-  margin-bottom: 20px;
 }
 
 .comment_btn[data-theme="light"] {

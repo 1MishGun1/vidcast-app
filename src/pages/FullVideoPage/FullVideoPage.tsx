@@ -26,6 +26,7 @@ import {
 import { VideoCard } from "../../components/VideoCard/VideoCard";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 import clsx from "clsx";
+import { updateHistory } from "../../features/history/history";
 
 const MONTH_NAMES = [
   "Янв.",
@@ -58,6 +59,9 @@ export const FullVideoPage = () => {
   const channelId = data?.user?._id;
   const { isSubscribed, subscribersCount, handleToggleSubscription } =
     useSubscription(channelId, isAuth);
+  const currentUser = useSelector(
+    (state: RootState) => state.auth.currentUser?._id
+  );
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -82,6 +86,12 @@ export const FullVideoPage = () => {
       dispatch(getCommentsByVideo(id));
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (data?._id && currentUser) {
+      dispatch(updateHistory(data._id));
+    }
+  }, [data?._id, currentUser, dispatch]);
 
   const handleLike = () => {
     if (id) dispatch(toggleReaction({ videoId: id, type: "like" }));
@@ -164,7 +174,8 @@ export const FullVideoPage = () => {
                 onClick={handleDislike}
                 className={clsx(
                   Styles["full_video_btn"],
-                  reaction.userReaction === "dislike" && Styles["active_reaction"]
+                  reaction.userReaction === "dislike" &&
+                    Styles["active_reaction"]
                 )}
                 data-theme={theme}
               >

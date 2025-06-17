@@ -40,3 +40,8 @@
     color: var(--color-hover);
   }
 }
+
+.comment_btns {
+  display: flex;
+  gap: 10px;
+}

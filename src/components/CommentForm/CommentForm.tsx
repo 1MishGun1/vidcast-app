@@ -52,24 +52,26 @@ export const CommentForm = ({
         className={Styles["comment_input"]}
         data-theme={theme}
       />
-      <button
-        type="submit"
-        className={Styles["comment_btn"]}
-        data-theme={theme}
-      >
-        {parentComment ? "Ответить" : "Комментировать"}
-      </button>
-
-      {parentComment && onCancelReply && (
+      <div className={Styles["comment_btns"]}>
         <button
-          type="button"
-          onClick={onCancelReply}
+          type="submit"
           className={Styles["comment_btn"]}
           data-theme={theme}
         >
-          Отмена
+          {parentComment ? "Ответить" : "Комментировать"}
         </button>
-      )}
+
+        {parentComment && onCancelReply && (
+          <button
+            type="button"
+            onClick={onCancelReply}
+            className={Styles["comment_btn"]}
+            data-theme={theme}
+          >
+            Отмена
+          </button>
+        )}
+      </div>
     </form>
   );
 };

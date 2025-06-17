@@ -1,14 +1,7 @@
-/* .comment_wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-} */
-
 .comment {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .comment_user_info {
@@ -49,4 +42,26 @@
   cursor: pointer;
   font-size: 14px;
   padding: 0;
+}
+
+.comment_user_btns {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.comment_btn[data-theme="light"] {
+  --color-text: black;
+}
+
+.comment_btn {
+  color: var(--color-text);
+  transition: all ease 0.3s;
+  padding: 5px;
+
+  &:hover {
+    background-color: #737373;
+    color: white;
+    border-radius: 4px;
+  }
 }

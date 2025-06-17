@@ -51,13 +51,35 @@ export const CommentItem = ({ comment, videoAuthorId }: ICommentProps) => {
           <p className={Styles["comment_user_login"]}>@{comment.user.login}</p>
           <p className={Styles["comment_text"]}>{comment.text}</p>
         </div>
+      </div>
+
+      <div className={Styles["comment_user_btns"]}>
+        {currentUser && (
+          <button onClick={handleReplyToggle} className={Styles["comment_btn"]}>
+            {showReplyForm ? "Скрыть форму ответа" : "Ответить"}
+          </button>
+        )}
 
         {(isOwner || isVideoOwner) && (
-          <button onClick={handleDelete} className="comment_btn">
+          <button onClick={handleDelete} className={Styles["comment_btn"]}>
             Удалить
           </button>
         )}
       </div>
+
+      {showReplyForm && (
+        <div className={Styles["comment_reply_form"]}>
+          <CommentForm
+            videoId={
+              typeof comment.video === "string"
+                ? comment.video
+                : comment.video._id
+            }
+            parentComment={comment}
+            onCancelReply={() => setShowReplyForm(false)}
+          />
+        </div>
+      )}
 
       {comment.replies.length > 0 && (
         <button
@@ -69,7 +91,6 @@ export const CommentItem = ({ comment, videoAuthorId }: ICommentProps) => {
             : `Показать ответы (${comment.replies.length})`}
         </button>
       )}
-
       {showReplies && (
         <div className={Styles["comment_replies"]}>
           {comment.replies.map((reply) => (
